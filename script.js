@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closePolicyBtn = document.getElementById('closePolicyModal');
     const acceptPolicyBtn = document.getElementById('acceptPolicyBtn');
 
-    function openModal(e) {
+    function openPolicyModalFn(e) {
         if (e) e.preventDefault();
         if (policyModal) {
             policyModal.classList.add('active');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function closeModal() {
+    function closePolicyModalFn() {
         if (policyModal) {
             policyModal.classList.remove('active');
             document.body.style.overflow = '';
@@ -64,18 +64,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     openPolicyBtns.forEach(btn => {
         if (btn) {
-            btn.addEventListener('click', openModal);
+            btn.addEventListener('click', openPolicyModalFn);
         }
     });
 
-    if (closePolicyBtn) closePolicyBtn.addEventListener('click', closeModal);
-    if (acceptPolicyBtn) acceptPolicyBtn.addEventListener('click', closeModal);
+    if (closePolicyBtn) closePolicyBtn.addEventListener('click', closePolicyModalFn);
+    if (acceptPolicyBtn) acceptPolicyBtn.addEventListener('click', closePolicyModalFn);
 
     if (policyModal) {
         policyModal.addEventListener('click', (e) => {
             if (e.target === policyModal) {
-                closeModal();
+                closePolicyModalFn();
             }
+        });
+    }
+
+    const cookieBanner = document.getElementById('cookieBanner');
+    const acceptCookiesBtn = document.getElementById('acceptCookiesBtn');
+
+    if (cookieBanner && !localStorage.getItem('dozari_cookies_accepted')) {
+        cookieBanner.classList.add('show');
+    }
+
+    if (acceptCookiesBtn) {
+        acceptCookiesBtn.addEventListener('click', () => {
+            localStorage.setItem('dozari_cookies_accepted', 'true');
+            cookieBanner.classList.remove('show');
         });
     }
 
@@ -101,11 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Hero Slideshow Logic (5 local images & vertical numbers with lines)
+    // 5. Hero Slideshow Logic
     const slides = document.querySelectorAll('.hero__slide');
     const verticalNumItems = document.querySelectorAll('.vertical-num-item');
     let currentSlide = 0;
-    const slideInterval = 5000; // 5 seconds
+    const slideInterval = 5000;
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -134,24 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Cookie Banner Logic
-    const cookieBanner = document.getElementById('cookieBanner');
-    const acceptCookieBtn = document.getElementById('acceptCookie');
-
-    if (cookieBanner && acceptCookieBtn) {
-        if (!localStorage.getItem('dozari_cookies_accepted')) {
-            setTimeout(() => {
-                cookieBanner.classList.add('show');
-            }, 1000);
-        }
-
-        acceptCookieBtn.addEventListener('click', () => {
-            localStorage.setItem('dozari_cookies_accepted', 'true');
-            cookieBanner.classList.remove('show');
-        });
-    }
-
-    // 7. Dynamic Media Cards from CSV & News Popup Modal
+    // 6. Dynamic Media Cards & News Popup Modal
     const mediaGrid = document.getElementById('mediaGrid');
     const mediaModal = document.getElementById('mediaModal');
     const closeMediaModal = document.getElementById('closeMediaModal');
@@ -190,13 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
         currentNewsIndex = index;
         const item = currentNewsList[currentNewsIndex];
         if (!item || !mediaModalBody) return;
-
         mediaModalBody.innerHTML = `
-            <img src="${item.photo}" alt="${item.title}">
-            <span class="modal-news-date">${item.date}</span>
-            <h2>${item.title}</h2>
-            <p>${item.text}</p>
-            <p>Команда DOZARI TEAM продолжает активную подготовку к следующим этапам чемпионата. Следите за нашими обновлениями в социальных сетях и на сайте, чтобы не пропустить эксклюзивные репортажи с трасс.</p>
+            <img class="media-modal__image" src="${item.photo}" alt="${item.title}">
+            <div class="media-modal__text">
+                <span class="modal-news-date">${item.date}</span>
+                <h2>${item.title}</h2>
+                <p>${item.text}</p>
+            </div>
         `;
 
         mediaModal.classList.add('active');
@@ -263,41 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function loadMediaFromCSV() {
-        try {
-            const response = await fetch(CSV_URL);
-            if (!response.ok) throw new Error('Network response was not ok');
-            const csvText = await response.text();
-            const rows = csvText.split('\n').map(row => row.split(','));
-            
-            const newsItems = [];
-            for (let i = 1; i < rows.length; i++) {
-                const cols = rows[i];
-                if (cols.length >= 4) {
-                    newsItems.push({
-                        title: cols[0].trim().replace(/^["']|["']$/g, ''),
-                        date: cols[1].trim().replace(/^["']|["']$/g, ''),
-                        text: cols[2].trim().replace(/^["']|["']$/g, ''),
-                        photo: cols[3].trim().replace(/^["']|["']$/g, ''),
-                        link: cols[4] ? cols[4].trim().replace(/^["']|["']$/g, '') : '#'
-                    });
-                }
-            }
+    renderMedia(fallbackNews);
 
-            if (newsItems.length > 0) {
-                renderMedia(newsItems);
-            } else {
-                renderMedia(fallbackNews);
-            }
-        } catch (error) {
-            console.warn('Используются резервные данные новостей:', error);
-            renderMedia(fallbackNews);
-        }
-    }
-
-    loadMediaFromCSV();
-
-    // 8. Phone Mask & Validation (+7 (XXX) XXX-XX-XX)
+    // 7. Phone Mask & Validation (+7 (XXX) XXX-XX-XX)
     const phoneInput = document.getElementById('userPhone');
 
     if (phoneInput) {
@@ -332,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. AJAX Form Submission to mail.php
+    // 8. AJAX Form Submission to mail.php
     const applicationForm = document.getElementById('applicationForm');
     const formMessage = document.getElementById('formMessage');
 
@@ -340,17 +305,21 @@ document.addEventListener('DOMContentLoaded', () => {
         applicationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const phoneVal = phoneInput.value.replace(/\D/g, '');
+            const phoneVal = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
             if (phoneVal.length < 11) {
-                formMessage.textContent = 'Пожалуйста, введите корректный номер телефона';
-                formMessage.className = 'form__message error';
+                if (formMessage) {
+                    formMessage.textContent = 'Пожалуйста, введите корректный номер телефона';
+                    formMessage.className = 'form__message error';
+                }
                 return;
             }
 
             const formData = new FormData(applicationForm);
             
-            formMessage.textContent = 'Отправка заявки...';
-            formMessage.className = 'form__message';
+            if (formMessage) {
+                formMessage.textContent = 'Отправка заявки...';
+                formMessage.className = 'form__message';
+            }
 
             try {
                 const response = await fetch('mail.php', {
@@ -361,16 +330,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
 
                 if (result.success) {
-                    formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами.';
-                    formMessage.className = 'form__message success';
+                    if (formMessage) {
+                        formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами.';
+                        formMessage.className = 'form__message success';
+                    }
                     applicationForm.reset();
                 } else {
                     throw new Error(result.message || 'Ошибка отправки');
                 }
             } catch (error) {
                 console.warn('Демо-режим отправки формы:', error);
-                formMessage.textContent = 'Спасибо! Заявка принята в обработку (демо-режим).';
-                formMessage.className = 'form__message success';
+                if (formMessage) {
+                    formMessage.textContent = 'Спасибо! Заявка принята в обработку (демо-режим).';
+                    formMessage.className = 'form__message success';
+                }
                 applicationForm.reset();
             }
         });
