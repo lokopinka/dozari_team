@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOZARI KARTING — Профессиональная гоночная команда</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Шапка -->
+    <header class="header">
+        <div class="container header__container">
+            <a href="#" class="logo">
+                <span class="logo__text">DOZARI</span>
+                <span class="logo__sub">TEAM</span>
+            </a>
+            <nav class="nav" id="navMenu">
+                <ul class="nav__list">
+                    <li><a href="#about" class="nav__link">О команде</a></li>
+                    <li><a href="#system" class="nav__link">Система</a></li>
+                    <li><a href="#program" class="nav__link">Гоночная программа</a></li>
+                    <li><a href="#athletes" class="nav__link">Пилоты</a></li>
+                    <li><a href="#media" class="nav__link">Медиа</a></li>
+                    <li><a href="#contacts" class="nav__link">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="themeCheckbox" aria-label="Сменить тему">
+                        <input type="checkbox" id="themeCheckbox" checked>
+                        <div class="slider-track">
+                            <span class="icon sun">☀️</span>
+                            <span class="icon moon">🌙</span>
+                            <div class="slider-thumb"></div>
+                        </div>
+                    </label>
+                </div>
+                <a href="#contacts" class="btn btn--primary header__btn"><span>Стать пилотом</span></a>
+                <button class="burger" id="burgerBtn" aria-label="Открыть меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero-блок -->
+        <section class="hero" id="hero">
+            <div class="hero__slider" id="heroSlider">
+                <div class="hero__slide active"></div>
+                <div class="hero__slide"></div>
+                <div class="hero__slide"></div>
+                <div class="hero__slide"></div>
+                <div class="hero__overlay"></div>
+            </div>
+
+            <div class="hero__vertical-nums" id="heroVerticalNums">
+                <div class="vertical-num-item active" data-index="0">
+                    <span class="num-text">01</span>
+                    <span class="num-line"></span>
+                </div>
+                <div class="vertical-num-item" data-index="1">
+                    <span class="num-text">02</span>
+                    <span class="num-line"></span>
+                </div>
+                <div class="vertical-num-item" data-index="2">
+                    <span class="num-text">03</span>
+                    <span class="num-line"></span>
+                </div>
+                <div class="vertical-num-item" data-index="3">
+                    <span class="num-text">04</span>
+                    <span class="num-line"></span>
+                </div>
+            </div>
+
+            <div class="container hero__content-wrapper">
+                <div class="hero__content">
+                    <div class="hero__badge">DOZARI TEAM</div>
+                    <h1 class="hero__title">СОЗДАЕМ <br><span>ЧЕМПИОНОВ</span></h1>
+                    <p class="hero__subtitle">Профессиональная гоночная команда. Мы организуем весь гоночный процесс и развиваем будущих чемпионов.</p>
+                    <div class="hero__buttons">
+                        <a href="#contacts" class="btn btn--primary"><span>СТАТЬ ПИЛОТОМ ▷</span></a>
+                        <a href="#about" class="btn btn--outline"><span>О КОМАНДЕ ▷</span></a>
+                    </div>
+                </div>
+
+                <div class="hero__side-stats">
+                    <div class="side-stat-card">
+                        <div class="side-stat-icon-wrap">
+                                <img src="images/icon_helmet_G.png" alt="" class="local-icon">
+                        </div>
+                        <div class="side-stat-text">
+                            <strong>НАША ЦЕЛЬ</strong>
+                            <span>ПОБЕДЫ СЕГОДНЯ —<br>ЧЕМПИОНЫ ЗАВТРА</span>
+                        </div>
+                    </div>
+                    <div class="side-stat-card">
+                        <div class="side-stat-num">1</div>
+                        <div class="side-stat-text">
+                            <span>ПИЛОТ</span>
+                            <span>МАШИНА</span>
+                            <span>МЕХАНИК</span>
+                        </div>
+                    </div>
+                    <div class="side-stat-card">
+                        <div class="side-stat-icon-wrap">
+                                <img src="images/icon_driver_G.png" alt="" class="local-icon">
+                        </div>
+                        <div class="side-stat-text">
+                            <strong>РОССИЯ</strong>
+                            <span class="accent-green">→ МИР</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Блок 1: Наша философия -->
+        <section class="philosophy" id="about">
+            <div class="container philosophy__container">
+                <div class="philosophy__info">
+                    <span class="section-tag section-tag--dashes"><span class="dash"></span>НАША ФИЛОСОФИЯ<span class="dash"></span></span>
+                    <h2 class="philosophy__title">ТАЛАНТ ПОЛУЧАЕТ <span class="accent-green">СИСТЕМУ</span></h2>
+                    <p class="philosophy__desc">
+                        Мы верим, что чемпионов рождает не случай. Мы создаем среду, где талант превращается в результат благодаря системе, опыту и полной вовлеченности команды.
+                    </p>
+                    <a href="https://школа-картинга.рф/" target="_blank" rel="noopener noreferrer" class="btn btn--primary philosophy-btn"><span>ПОДРОБНЕЕ О НАС →</span></a>
+                </div>
+
+                <div class="philosophy__cards">
+                    <div class="phil-card">
+                        <img src="images/slide1.jpg" alt="Индивидуальный подход" class="phil-card__img">
+                        <div class="phil-card__overlay"></div>
+                        <div class="phil-card__content">
+                            <div class="phil-card__icon">
+                                <img src="images/icon_helmet_G.png" alt="" class="local-icon">
+                            </div>
+                            <h3 class="phil-card__title">ИНДИВИДУАЛЬНЫЙ<br>ПОДХОД</h3>
+                            <p class="phil-card__text">Каждый пилот — уникальный проект</p>
+                        </div>
+                    </div>
+
+                    <div class="phil-card">
+                        <img src="images/slide2.jpg" alt="Полный цикл подготовки" class="phil-card__img">
+                        <div class="phil-card__overlay"></div>
+                        <div class="phil-card__content">
+                            <div class="phil-card__icon">
+                                <img src="images/icon_kart_G.png" alt="" class="local-icon">
+                            </div>
+                            <h3 class="phil-card__title">ПОЛНЫЙ ЦИКЛ<br>ПОДГОТОВКИ</h3>
+                            <p class="phil-card__text">От тренировок до международных стартов</p>
+                        </div>
+                    </div>
+
+                    <div class="phil-card">
+                        <img src="images/slide3.jpg" alt="Результат и рост" class="phil-card__img">
+                        <div class="phil-card__overlay"></div>
+                        <div class="phil-card__content">
+                            <div class="phil-card__icon">
+                                <img src="images/icon_chart_G.png" alt="" class="local-icon">
+                            </div>
+                            <h3 class="phil-card__title">РЕЗУЛЬТАТ<br>И РОСТ</h3>
+                            <p class="phil-card__text">Победы сегодня — лидеры завтра</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Блок 2: Наша формула -->
+        <section class="formula" id="system">
+            <div class="container formula__container">
+                <div class="formula__info">
+                    <span class="section-tag section-tag--dashes"><span class="dash"></span>НАША ФОРМУЛА<span class="dash"></span></span>
+                    <h2 class="formula__title">
+                        1 ПИЛОТ<br>
+                        1 МАШИНА<br>
+                        <span class="accent-green">1 МЕХАНИК</span>
+                    </h2>
+                    <p class="formula__desc">
+                        Каждый пилот DOZARI TEAM имеет свою машину и личного механика. Мы работаем как единый организм, где каждая деталь важна.
+                    </p>
+                </div>
+
+                <div class="formula__grid">
+                    <div class="formula-col">
+                        <div class="formula-col__watermark">01</div>
+                        <div class="formula-col__photo">
+                            <img src="images/slide4.jpg" alt="Пилот" loading="lazy">
+                        </div>
+                        <div class="formula-col__content">
+                            <h3 class="formula-col__title">ПИЛОТ</h3>
+                            <p class="formula-col__text">Тренировки, анализ, ментальная подготовка, гонки и рост.</p>
+                        </div>
+                    </div>
+
+                    <div class="formula-col">
+                        <div class="formula-col__watermark">02</div>
+                        <div class="formula-col__photo">
+                            <img src="images/slide5.jpg" alt="Машина" loading="lazy">
+                        </div>
+                        <div class="formula-col__content">
+                            <h3 class="formula-col__title">МАШИНА</h3>
+                            <p class="formula-col__text">Индивидуальная настройка, постоянное развитие, только лучшее оборудование.</p>
+                        </div>
+                    </div>
+
+                    <div class="formula-col">
+                        <div class="formula-col__watermark">03</div>
+                        <div class="formula-col__photo">
+                            <img src="images/slide1.jpg" alt="Механик" loading="lazy">
+                        </div>
+                        <div class="formula-col__content">
+                            <h3 class="formula-col__title">МЕХАНИК</h3>
+                            <p class="formula-col__text">Личный механик отвечает за технику, настройку и результат на трассе.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Блок 3: Гоночная программа -->
+        <section class="program" id="program">
+            <div class="container">
+                <div class="program__top">
+                    <div class="section-header-left">
+                        <span class="section-tag section-tag--dashes"><span class="dash"></span>ГОНОЧНАЯ ПРОГРАММА<span class="dash"></span></span>
+                        <h2>ВЕСЬ ГОНОЧНЫЙ <br><span class="accent-green">ПРОЦЕСС</span></h2>
+                    </div>
+                    <div class="program__image-banner">
+                        <div class="program__image-overlay"></div>
+                    </div>
+                </div>
+                <div class="program__layout">
+                    <div class="program__steps-grid">
+                        <div class="program-step">
+                            <div class="program-step__icon-box">
+                                <img src="images/icon_helmet.png" alt="Тренировки" class="program-step__png">
+                            </div>
+                            <div class="program-step__content-inner">
+                                <h3>ТРЕНИРОВКИ</h3>
+                                <p>Регулярные тренировки на лучших трассах</p>
+                            </div>
+                        </div>
+                        <div class="program-step">
+                            <div class="program-step__icon-box">
+                                <img src="images/icon_chart.png" alt="Анализ" class="program-step__png">
+                            </div>
+                            <div class="program-step__content-inner">
+                                <h3>АНАЛИЗ</h3>
+                                <p>Телеметрия, разбор и работа над ошибками</p>
+                            </div>
+                        </div>
+                        <div class="program-step">
+                            <div class="program-step__icon-box">
+                                <img src="images/icon_wrench.png" alt="Подготовка" class="program-step__png">
+                            </div>
+                            <div class="program-step__content-inner">
+                                <h3>ПОДГОТОВКА</h3>
+                                <p>Техника, физика, ментальная подготовка</p>
+                            </div>
+                        </div>
+                        <div class="program-step">
+                            <div class="program-step__icon-box">
+                                <img src="images/icon_driver.png" alt="Соревнования" class="program-step__png">
+                            </div>
+                            <div class="program-step__content-inner">
+                                <h3>СОРЕВНОВАНИЯ</h3>
+                                <p>Этапы чемпионатов России и мира</p>
+                            </div>
+                        </div>
+                        <div class="program-step">
+                            <div class="program-step__icon-box">
+                                <img src="images/icon_kart.png" alt="Рост" class="program-step__png">
+                            </div>
+                            <div class="program-step__content-inner">
+                                <h3>РОСТ</h3>
+                                <p>Постоянное развитие и движение вперед</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Наш путь: Russia -> World -->
+        <section class="path-section">
+            <div class="container">
+                <div class="path__wrapper">
+                    <div class="path__info">
+                        <span class="section-tag section-tag--dashes"><span class="dash"></span>НАШ ПУТЬ<span class="dash"></span></span>
+                        <h2>RUSSIA → WORLD</h2>
+                        <p>Мы выступаем на главных трассах России, боремся за титул чемпиона страны и даем возможность талантливым пилотам представлять Россию на чемпионате мира.</p>
+                    </div>
+                    <div class="path__cards">
+                        <div class="path-card">
+                            <div class="path-card__icon-box">
+                                <img src="images/icon_helmet.png" alt="Чемпионат России" class="path-card__png">
+                            </div>
+                            <div>
+                                <h3>Чемпионат России</h3>
+                                <p>Победа, титул, официальный статус чемпиона России</p>
+                            </div>
+                        </div>
+                        <div class="path-card">
+                            <div class="path-card__icon-box">
+                                <img src="images/icon_driver.png" alt="Чемпионат мира" class="path-card__png">
+                            </div>
+                            <div>
+                                <h3>Чемпионат мира</h3>
+                                <p>Лучшие пилоты команды получают шанс выступить на мировой арене</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Пилоты (Спортсмены) -->
+        <section class="athletes" id="athletes">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag section-tag--dashes"><span class="dash"></span>СОСТАВ КОМАНДЫ<span class="dash"></span></span>
+                    <h2>НАШИ ПИЛОТЫ</h2>
+                </div>
+                <div class="athletes__grid">
+                    <div class="athlete-card">
+                        <div class="athlete-card__img">
+                            <img src="images/KMRF6411.jpg" alt="Пилот" loading="lazy">
+                            <div class="athlete-card__tag">OK Junior</div>
+                        </div>
+                        <div class="athlete-card__content">
+                            <h3>МАТВЕЙ ДОЗАРОВ</h3>
+                            <p class="athlete-card__role">Ведущий пилот команды</p>
+                            <ul class="athlete-card__stats">
+                                <li><span>Возраст:</span> 16 лет</li>
+                                <li><span>Стаж:</span> 8 лет</li>
+                                <li><span>Титул:</span> Победитель ROK Cup</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="athlete-card">
+                        <div class="athlete-card__img">
+                            <img src="images/KMRF6548.jpg" alt="Пилот" loading="lazy">
+                            <div class="athlete-card__tag">Academy</div>
+                        </div>
+                        <div class="athlete-card__content">
+                            <h3>АРТЕМ ВОЛКОВ</h3>
+                            <p class="athlete-card__role">Пилот молодежной программы</p>
+                            <ul class="athlete-card__stats">
+                                <li><span>Возраст:</span> 14 лет</li>
+                                <li><span>Стаж:</span> 5 лет</li>
+                                <li><span>Титул:</span> Призер Первенства РФ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Медиа -->
+        <section class="media-contacts" id="media">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag section-tag--dashes"><span class="dash"></span>ПРЕСС-ЦЕНТР<span class="dash"></span></span>
+                    <h2>МЕДИА И СОБЫТИЯ</h2>
+                </div>
+                <div class="media__grid" id="mediaGrid">
+                    <div class="media-card-skeleton">Загрузка новостей...</div>
+                </div>
+                <div class="media__more-btn">
+                    <a href="https://vk.ru/dozarikart" class="btn btn--outline" target="_blank" rel="noopener noreferrer"><span>Смотреть больше →</span></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Заявка на вступление (Контакты) -->
+        <section class="contacts" id="contacts">
+            <div class="contacts__bg-overlay"></div>
+            <div class="container contacts__container-relative">
+                <div class="contacts__wrapper">
+                    <div class="contacts__info">
+                        <span class="section-tag section-tag--dashes"><span class="dash"></span>СТАНЬ ЧАСТЬЮ DOZARI TEAM<span class="dash"></span></span>
+                        <h2>ЗАЯВКА <br>НА ВСТУПЛЕНИЕ</h2>
+                        <p>Заполни форму, и мы свяжемся с тобой для организации тестовых заездов.</p>
+                        
+                        <ul class="contacts__list">
+                            <li>
+                                <div class="contacts__icon-box">
+                                    <img src="images/icon_helmet.png" alt="Телефон" class="contact-png">
+                                </div>
+                                <div>
+                                    <strong>Телефон:</strong>
+                                    <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <a class="contacts__address" href="https://yandex.ru/maps/-/CCUj5OsmTC" target="_blank" rel="noopener noreferrer">
+                            <strong>АДРЕС:</strong>
+                            <span>МКАД, 2-й километр, ТЦ «Шоколад», крытый паркинг, уровень «Е»</span>
+                            <small>Открыть на Яндекс Картах →</small>
+                        </a>
+                    </div>
+
+                    <div class="contacts__form-container">
+                        <form class="form" id="applicationForm">
+                            <h3>ОТПРАВИТЬ ЗАЯВКУ</h3>
+                            <div class="form__group">
+                                <label for="userName">Имя</label>
+                                <input type="text" id="userName" name="name" required placeholder="Иван Иванов">
+                            </div>
+                            <div class="form__group">
+                                <label for="userAge">Возраст</label>
+                                <input type="number" id="userAge" name="age" required min="5" max="60" placeholder="16">
+                            </div>
+                            <div class="form__group">
+                                <label for="userCity">Город</label>
+                                <input type="text" id="userCity" name="city" required placeholder="Москва">
+                            </div>
+                            <div class="form__group">
+                                <label for="userPhone">Номер телефона</label>
+                                <input type="tel" id="userPhone" name="phone" required placeholder="+7 (___) ___-__-__">
+                            </div>
+                            <div class="form__group">
+                                <label for="userExp">Опыт в картинге</label>
+                                <textarea id="userExp" name="experience" rows="3" placeholder="Расскажите о вашем опыте"></textarea>
+                            </div>
+                            <div class="form__checkbox-group">
+                                <input type="checkbox" id="privacyPolicy" name="privacy" required checked>
+                                <label for="privacyPolicy">Принимаю <a href="#" id="openPolicyModal">Политику конфиденциальности</a></label>
+                            </div>
+                            <button type="submit" class="btn btn--primary form__submit"><span>ОТПРАВИТЬ ЗАЯВКУ →</span></button>
+                            <div id="formMessage" class="form__message"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__col">
+                <a href="#" class="logo">
+                    <span class="logo__text">DOZARI</span>
+                    <span class="logo__sub">TEAM</span>
+                </a>
+                <p class="footer__desc">Профессиональная гоночная команда. Воспитываем чемпионов.</p>
+            </div>
+            <div class="footer__col">
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="#about">О команде</a></li>
+                    <li><a href="#system">Система</a></li>
+                    <li><a href="#program">Программа</a></li>
+                    <li><a href="#athletes">Пилоты</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Контакты</h4>
+                <ul>
+                    <li><a href="tel:+79991234567">+7 (999) 123-45-67</a></li>
+                    <li><a href="mailto:director@dozari-karting.ru">director@dozari-karting.ru</a></li>
+                    <li><a href="https://yandex.ru/maps/-/CCUj5OsmTC" target="_blank" rel="noopener noreferrer">МКАД, 2-й километр, ТЦ «Шоколад», крытый паркинг, уровень «Е»</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>Документы</h4>
+                <ul>
+                    <li><a href="#" id="openPolicyModalFooter">Политика конфиденциальности</a></li>
+                </ul>
+            </div>
+            <div class="footer__col footer__social-col">
+                <h4>Мы в сети</h4>
+                <div class="footer__socials">
+                    <a class="footer__social-link" href="https://vk.ru/dozarikart" target="_blank" rel="noopener noreferrer" aria-label="DOZARI TEAM во ВКонтакте" title="ВКонтакте">
+                        <img src="images/vk.png" alt="" class="social-icon">
+                    </a>
+                    <a class="footer__social-link" href="https://t.me/dozarikart" target="_blank" rel="noopener noreferrer" aria-label="DOZARI TEAM в Telegram" title="Telegram">
+                        <img src="images/telegram.png" alt="" class="social-icon">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <div class="container">
+                <p>&copy; 2026 DOZARI TEAM. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Кнопка "Вверх" -->
+    <button class="scroll-to-top" id="scrollToTopBtn" aria-label="Наверх">↑</button>
+
+    <aside class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Уведомление о cookie">
+        <p>Мы используем cookie, чтобы сайт работал корректно. Продолжая пользоваться сайтом, вы соглашаетесь с их использованием.</p>
+        <div class="cookie-banner__actions">
+            <a href="#" id="openPolicyModalCookie">Политика конфиденциальности</a>
+            <button class="btn btn--primary cookie-banner__accept" id="acceptCookiesBtn" type="button"><span>Принять</span></button>
+        </div>
+    </aside>
+
+    <!-- Модальное окно: Просмотр новости (Медиа) -->
+    <div class="modal-overlay" id="mediaModal">
+        <div class="modal-content media-modal-content">
+            <button class="modal-close" id="closeMediaModal" aria-label="Закрыть">×</button>
+            <button class="media-modal-arrow media-modal-prev" id="prevMediaBtn" aria-label="Предыдущая">‹</button>
+            <button class="media-modal-arrow media-modal-next" id="nextMediaBtn" aria-label="Следующая">›</button>
+            <div class="media-modal-body" id="mediaModalBody">
+                <!-- Динамически заполняется из JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Политика конфиденциальности -->
+    <div class="modal-overlay" id="policyModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closePolicyModal" aria-label="Закрыть">×</button>
+            <h2>Политика конфиденциальности</h2>
+            <div class="modal-body">
+                <p>Настоящая Политика конфиденциальности персональных данных действует в отношении всей информации, которую сайт DOZARI TEAM может получить о Пользователе во время использования сайта.</p>
+                <h3>1. Сбор персональных данных</h3>
+                <p>Мы собираем информацию, которую вы предоставляете при заполнении формы заявки (имя, возраст, город, телефон, опыт).</p>
+                <h3>2. Использование данных</h3>
+                <p>Полученные данные используются исключительно для связи с вами, организации тестовых заездов и улучшения качества наших услуг.</p>
+                <h3>3. Защита информации</h3>
+                <p>Команда DOZARI TEAM принимает все необходимые меры для защиты ваших персональных данных от несанкционированного доступа.</p>
+            </div>
+            <button class="btn btn--primary modal-btn-close" id="acceptPolicyBtn"><span>Понятно</span></button>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
