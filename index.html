@@ -14,9 +14,9 @@
     <!-- Header / Шапка -->
     <header class="header">
         <div class="container header__container">
-            <a href="#" class="logo">
-                <span class="logo__text">DOZARI</span>
-                <span class="logo__sub">TEAM</span>
+            <a href="#" class="logo" aria-label="DOZARI TEAM">
+                <img src="images/logo_l.png" alt="DOZARI TEAM" class="logo__image logo__image--light">
+                <img src="images/logo_b.png" alt="" aria-hidden="true" class="logo__image logo__image--dark">
             </a>
             <nav class="nav" id="navMenu">
                 <ul class="nav__list">
@@ -52,72 +52,49 @@
     <main>
         <!-- Hero-блок -->
         <section class="hero" id="hero">
+            <!-- 1. Слайдер на фоне -->
             <div class="hero__slider" id="heroSlider">
-                <div class="hero__slide active"></div>
-                <div class="hero__slide"></div>
-                <div class="hero__slide"></div>
-                <div class="hero__slide"></div>
-                <div class="hero__overlay"></div>
+                <div class="hero__slide active" style="background-image: url('images/slide1.jpg')"></div>
+                <div class="hero__slide" style="background-image: url('images/slide2.jpg')"></div>
+                <div class="hero__slide" style="background-image: url('images/slide3.jpg')"></div>
+                <div class="hero__slide" style="background-image: url('images/slide4.jpg')"></div>
             </div>
 
+            <!-- 2. Легкие градиенты по краям для читаемости текста -->
+            <div class="hero__gradient hero__gradient--left"></div>
+            <div class="hero__gradient hero__gradient--right"></div>
+
+            <!-- Вертикальные цифры слайдера -->
             <div class="hero__vertical-nums" id="heroVerticalNums">
-                <div class="vertical-num-item active" data-index="0">
-                    <span class="num-text">01</span>
-                    <span class="num-line"></span>
-                </div>
-                <div class="vertical-num-item" data-index="1">
-                    <span class="num-text">02</span>
-                    <span class="num-line"></span>
-                </div>
-                <div class="vertical-num-item" data-index="2">
-                    <span class="num-text">03</span>
-                    <span class="num-line"></span>
-                </div>
-                <div class="vertical-num-item" data-index="3">
-                    <span class="num-text">04</span>
-                    <span class="num-line"></span>
-                </div>
+                <div class="vertical-num-item active" data-index="0"><span class="num-text">01</span><span class="num-line"></span></div>
+                <div class="vertical-num-item" data-index="1"><span class="num-text">02</span><span class="num-line"></span></div>
+                <div class="vertical-num-item" data-index="2"><span class="num-text">03</span><span class="num-line"></span></div>
+                <div class="vertical-num-item" data-index="3"><span class="num-text">04</span><span class="num-line"></span></div>
             </div>
 
-            <div class="container hero__content-wrapper">
-                <div class="hero__content">
-                    <div class="hero__badge">DOZARI TEAM</div>
-                    <h1 class="hero__title">СОЗДАЕМ <br><span>ЧЕМПИОНОВ</span></h1>
-                    <p class="hero__subtitle">Профессиональная гоночная команда. Мы организуем весь гоночный процесс и развиваем будущих чемпионов.</p>
-                    <div class="hero__buttons">
-                        <a href="#contacts" class="btn btn--primary"><span>СТАТЬ ПИЛОТОМ ▷</span></a>
-                        <a href="#about" class="btn btn--outline"><span>О КОМАНДЕ ▷</span></a>
-                    </div>
+            <!-- 3. Основная сетка контента -->
+            <div class="hero__layout">
+                
+                <!-- ЛЕВАЯ ЧАСТЬ: Заголовок и кнопки -->
+                <div class="hero__left">
+            <div class="hero__badge">DOZARI TEAM</div>
+            
+            <!-- Единый крупный заголовок -->
+            <h1 class="hero__title">
+                ПРОФЕССИОНАЛЬНАЯ ГОНОЧНАЯ КОМАНДА ПО КАРТИНГУ, ГДЕ НАЧИНАЮТСЯ КАРЬЕРЫ <span class="accent-green">ПИЛОТОВ</span>
+            </h1>
+            
+            <div class="hero__buttons">
+                <a href="#contacts" class="btn btn--primary hero-btn-giant"><span>СТАТЬ ПИЛОТОМ ▷</span></a>
+            </div>
+        </div>
+
+                <!-- ЦЕНТР: Пилот (PNG без фона) -->
+                <div class="hero__center">
+                    <img src="images/pilot-cutout.png" alt="Пилот команды DOZARI">
                 </div>
 
-                <div class="hero__side-stats">
-                    <div class="side-stat-card">
-                        <div class="side-stat-icon-wrap">
-                                <img src="images/icon_helmet_G.png" alt="" class="local-icon">
-                        </div>
-                        <div class="side-stat-text">
-                            <strong>НАША ЦЕЛЬ</strong>
-                            <span>ПОБЕДЫ СЕГОДНЯ —<br>ЧЕМПИОНЫ ЗАВТРА</span>
-                        </div>
-                    </div>
-                    <div class="side-stat-card">
-                        <div class="side-stat-num">1</div>
-                        <div class="side-stat-text">
-                            <span>ПИЛОТ</span>
-                            <span>МАШИНА</span>
-                            <span>МЕХАНИК</span>
-                        </div>
-                    </div>
-                    <div class="side-stat-card">
-                        <div class="side-stat-icon-wrap">
-                                <img src="images/icon_driver_G.png" alt="" class="local-icon">
-                        </div>
-                        <div class="side-stat-text">
-                            <strong>РОССИЯ</strong>
-                            <span class="accent-green">→ МИР</span>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
         </section>
 
