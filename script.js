@@ -348,4 +348,163 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 9. Mobile Carousels for Philosophy & Formula
+    function initCarousel(carouselId, trackSelector, prevSelector, nextSelector, dotsSelector = null, autoPlay = true, autoPlayDelay = 4000) {
+        const carousel = document.getElementById(carouselId);
+        if (!carousel) return;
+
+        const track = carousel.querySelector(trackSelector);
+        const prevBtn = carousel.querySelector(prevSelector);
+        const nextBtn = carousel.querySelector(nextSelector);
+        const dotsContainer = dotsSelector ? carousel.querySelector(dotsSelector) : null;
+        const slides = track ? track.children : [];
+        const slideCount = slides.length;
+
+        if (slideCount <= 1) {
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+            return;
+        }
+
+        let currentIndex = 0;
+        let autoPlayTimer = null;
+        let isUserInteracting = false;
+
+        // Create dots if container exists
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slideCount; i++) {
+                const dot = document.createElement('button');
+                dot.className = i === 0 ? 'philosophy__dot active' : 'philosophy__dot';
+                dot.setAttribute('aria-label', `Слайд ${i + 1}`);
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateCarousel() {
+            if (!track) return;
+            const offset = -currentIndex * 100;
+            track.style.transform = `translateX(${offset}%)`;
+
+            // Update dots
+            if (dotsContainer) {
+                const dots = dotsContainer.querySelectorAll('.philosophy__dot, .formula__dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+        }
+
+        function goToSlide(index) {
+            currentIndex = (index + slideCount) % slideCount;
+            updateCarousel();
+        }
+
+        function nextSlide() {
+            goToSlide(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            goToSlide(currentIndex - 1);
+        }
+
+        function startAutoPlay() {
+            if (!autoPlay) return;
+            stopAutoPlay();
+            autoPlayTimer = setInterval(() => {
+                if (!isUserInteracting) {
+                    nextSlide();
+                }
+            }, autoPlayDelay);
+        }
+
+        function stopAutoPlay() {
+            if (autoPlayTimer) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = null;
+            }
+        }
+
+        // Event listeners
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                isUserInteracting = true;
+                prevSlide();
+                stopAutoPlay();
+                setTimeout(() => { isUserInteracting = false; startAutoPlay(); }, 1000);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                isUserInteracting = true;
+                nextSlide();
+                stopAutoPlay();
+                setTimeout(() => { isUserInteracting = false; startAutoPlay(); }, 1000);
+            });
+        }
+
+        // Pause on hover
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoPlay();
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                isUserInteracting = true;
+                if (diff > 0) nextSlide(); else prevSlide();
+                setTimeout(() => { isUserInteracting = false; startAutoPlay(); }, 1000);
+            } else {
+                startAutoPlay();
+            }
+        }, { passive: true });
+
+        // Resize handler - reinitialize on breakpoint change
+        let wasMobile = window.innerWidth <= 768;
+        window.addEventListener('resize', () => {
+            const isMobile = window.innerWidth <= 768;
+            if (wasMobile !== isMobile) {
+                wasMobile = isMobile;
+                if (isMobile) {
+                    startAutoPlay();
+                } else {
+                    stopAutoPlay();
+                }
+            }
+        });
+
+        // Start autoplay if mobile
+        if (window.innerWidth <= 768) {
+            startAutoPlay();
+        }
+    }
+
+    // Initialize carousels
+    initCarousel('philosophyCarousel', '.philosophy__track', '.philosophy__arrow--prev', '.philosophy__arrow--next', '.philosophy__dots');
+    initCarousel('formulaCarousel', '.formula__track', '.formula__arrow--prev', '.formula__arrow--next', '.formula__dots');
+
+    // Add dots containers to carousels if they don't exist
+    function ensureDotsContainer(carouselId, dotsClass) {
+        const carousel = document.getElementById(carouselId);
+        if (carousel && !carousel.querySelector(`.${dotsClass}`)) {
+            const dotsContainer = document.createElement('div');
+            dotsContainer.className = dotsClass;
+            carousel.appendChild(dotsContainer);
+        }
+    }
+
+    ensureDotsContainer('philosophyCarousel', 'philosophy__dots');
+    ensureDotsContainer('formulaCarousel', 'formula__dots');
 });

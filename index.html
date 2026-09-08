@@ -54,23 +54,12 @@
         <section class="hero" id="hero">
             <!-- 1. Слайдер на фоне -->
             <div class="hero__slider" id="heroSlider">
-                <div class="hero__slide active" style="background-image: url('images/slide1.jpg')"></div>
-                <div class="hero__slide" style="background-image: url('images/slide2.jpg')"></div>
-                <div class="hero__slide" style="background-image: url('images/slide3.jpg')"></div>
-                <div class="hero__slide" style="background-image: url('images/slide4.jpg')"></div>
+                <div class="hero__slide active" style="background-image: url('images/fon.jpg')"></div>
             </div>
 
             <!-- 2. Легкие градиенты по краям для читаемости текста -->
             <div class="hero__gradient hero__gradient--left"></div>
             <div class="hero__gradient hero__gradient--right"></div>
-
-            <!-- Вертикальные цифры слайдера -->
-            <div class="hero__vertical-nums" id="heroVerticalNums">
-                <div class="vertical-num-item active" data-index="0"><span class="num-text">01</span><span class="num-line"></span></div>
-                <div class="vertical-num-item" data-index="1"><span class="num-text">02</span><span class="num-line"></span></div>
-                <div class="vertical-num-item" data-index="2"><span class="num-text">03</span><span class="num-line"></span></div>
-                <div class="vertical-num-item" data-index="3"><span class="num-text">04</span><span class="num-line"></span></div>
-            </div>
 
             <!-- 3. Основная сетка контента -->
             <div class="hero__layout">
@@ -81,7 +70,7 @@
             
             <!-- Единый крупный заголовок -->
             <h1 class="hero__title">
-                ПРОФЕССИОНАЛЬНАЯ ГОНОЧНАЯ КОМАНДА ПО КАРТИНГУ, ГДЕ НАЧИНАЮТСЯ КАРЬЕРЫ <span class="accent-green">ПИЛОТОВ</span>
+                ПРОФЕССИОНАЛЬНАЯ ШКОЛА КАРТИНГА, ГДЕ НАЧИНАЮТСЯ КАРЬЕРЫ <span class="accent-green">ПИЛОТОВ</span>
             </h1>
             
             <div class="hero__buttons">
@@ -110,6 +99,7 @@
                     <a href="https://школа-картинга.рф/" target="_blank" rel="noopener noreferrer" class="btn btn--primary philosophy-btn"><span>ПОДРОБНЕЕ О НАС →</span></a>
                 </div>
 
+                <!-- Десктоп: обычная сетка -->
                 <div class="philosophy__cards">
                     <div class="phil-card">
                         <img src="images/slide1.jpg" alt="Индивидуальный подход" class="phil-card__img">
@@ -147,6 +137,50 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Мобильные: карусель -->
+                <div class="philosophy__carousel" id="philosophyCarousel">
+                    <div class="philosophy__track">
+                        <div class="phil-card">
+                            <img src="images/slide1.jpg" alt="Индивидуальный подход" class="phil-card__img">
+                            <div class="phil-card__overlay"></div>
+                            <div class="phil-card__content">
+                                <div class="phil-card__icon">
+                                    <img src="images/icon_helmet_G.png" alt="" class="local-icon">
+                                </div>
+                                <h3 class="phil-card__title">ИНДИВИДУАЛЬНЫЙ<br>ПОДХОД</h3>
+                                <p class="phil-card__text">Каждый пилот — уникальный проект</p>
+                            </div>
+                        </div>
+
+                        <div class="phil-card">
+                            <img src="images/slide2.jpg" alt="Полный цикл подготовки" class="phil-card__img">
+                            <div class="phil-card__overlay"></div>
+                            <div class="phil-card__content">
+                                <div class="phil-card__icon">
+                                    <img src="images/icon_kart_G.png" alt="" class="local-icon">
+                                </div>
+                                <h3 class="phil-card__title">ПОЛНЫЙ ЦИКЛ<br>ПОДГОТОВКИ</h3>
+                                <p class="phil-card__text">От тренировок до международных стартов</p>
+                            </div>
+                        </div>
+
+                        <div class="phil-card">
+                            <img src="images/slide3.jpg" alt="Результат и рост" class="phil-card__img">
+                            <div class="phil-card__overlay"></div>
+                            <div class="phil-card__content">
+                                <div class="phil-card__icon">
+                                    <img src="images/icon_chart_G.png" alt="" class="local-icon">
+                                </div>
+                                <h3 class="phil-card__title">РЕЗУЛЬТАТ<br>И РОСТ</h3>
+                                <p class="phil-card__text">Победы сегодня — лидеры завтра</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="philosophy__arrow philosophy__arrow--prev" aria-label="Предыдущая карточка">‹</button>
+                    <button class="philosophy__arrow philosophy__arrow--next" aria-label="Следующая карточка">›</button>
+                    <div class="philosophy__dots" aria-label="Навигация по карточкам"></div>
+                </div>
             </div>
         </section>
 
@@ -165,11 +199,12 @@
                     </p>
                 </div>
 
+                <!-- Десктоп: обычная сетка -->
                 <div class="formula__grid">
                     <div class="formula-col">
                         <div class="formula-col__watermark">01</div>
                         <div class="formula-col__photo">
-                            <img src="images/slide4.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/pilot.jpg" alt="Пилот" loading="lazy">
                         </div>
                         <div class="formula-col__content">
                             <h3 class="formula-col__title">ПИЛОТ</h3>
@@ -180,7 +215,7 @@
                     <div class="formula-col">
                         <div class="formula-col__watermark">02</div>
                         <div class="formula-col__photo">
-                            <img src="images/slide5.jpg" alt="Машина" loading="lazy">
+                            <img src="images/cart.jpg" alt="Машина" loading="lazy">
                         </div>
                         <div class="formula-col__content">
                             <h3 class="formula-col__title">МАШИНА</h3>
@@ -191,13 +226,54 @@
                     <div class="formula-col">
                         <div class="formula-col__watermark">03</div>
                         <div class="formula-col__photo">
-                            <img src="images/slide1.jpg" alt="Механик" loading="lazy">
+                            <img src="images/repair.jpg" alt="Механик" loading="lazy">
                         </div>
                         <div class="formula-col__content">
                             <h3 class="formula-col__title">МЕХАНИК</h3>
-                            <p class="formula-col__text">Личный механик отвечает за технику, настройку и результат на трассе.</p>
+                            <p class="formula-col__text">Личный механик - ваша поддержка и опора для уверенных побед.</p>
                         </div>
                     </div>
+                </div>
+
+                <!-- Мобильные: карусель -->
+                <div class="formula__carousel" id="formulaCarousel">
+                    <div class="formula__track">
+                        <div class="formula-col">
+                            <div class="formula-col__watermark">01</div>
+                            <div class="formula-col__photo">
+                                <img src="images/pilot.jpg" alt="Пилот" loading="lazy">
+                            </div>
+                            <div class="formula-col__content">
+                                <h3 class="formula-col__title">ПИЛОТ</h3>
+                                <p class="formula-col__text">Тренировки, анализ, ментальная подготовка, гонки и рост.</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-col">
+                            <div class="formula-col__watermark">02</div>
+                            <div class="formula-col__photo">
+                                <img src="images/cart.jpg" alt="Машина" loading="lazy">
+                            </div>
+                            <div class="formula-col__content">
+                                <h3 class="formula-col__title">МАШИНА</h3>
+                                <p class="formula-col__text">Индивидуальная настройка, постоянное развитие, только лучшее оборудование.</p>
+                            </div>
+                        </div>
+
+                        <div class="formula-col">
+                            <div class="formula-col__watermark">03</div>
+                            <div class="formula-col__photo">
+                                <img src="images/repair.jpg" alt="Механик" loading="lazy">
+                            </div>
+                            <div class="formula-col__content">
+                                <h3 class="formula-col__title">МЕХАНИК</h3>
+                                <p class="formula-col__text">Личный механик отвечает за технику, настройку и результат на трассе.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="formula__arrow formula__arrow--prev" aria-label="Предыдущая карточка">‹</button>
+                    <button class="formula__arrow formula__arrow--next" aria-label="Следующая карточка">›</button>
+                    <div class="formula__dots" aria-label="Навигация по карточкам"></div>
                 </div>
             </div>
         </section>
@@ -211,7 +287,7 @@
                         <h2>ВЕСЬ ГОНОЧНЫЙ <br><span class="accent-green">ПРОЦЕСС</span></h2>
                     </div>
                     <div class="program__image-banner">
-                        <div class="program__image-overlay"></div>
+                        <img src="images/race.jpg" alt="Гонка" class="program__image-banner">
                     </div>
                 </div>
                 <div class="program__layout">
@@ -425,9 +501,9 @@
     <footer class="footer">
         <div class="container footer__container">
             <div class="footer__col">
-                <a href="#" class="logo">
-                    <span class="logo__text">DOZARI</span>
-                    <span class="logo__sub">TEAM</span>
+                <a href="#" class="logo" aria-label="DOZARI TEAM">
+                    <img src="images/logo_l.png" alt="DOZARI TEAM" class="logo__image logo__image--light">
+                    <img src="images/logo_b.png" alt="" aria-hidden="true" class="logo__image logo__image--dark">
                 </a>
                 <p class="footer__desc">Профессиональная гоночная команда. Воспитываем чемпионов.</p>
             </div>

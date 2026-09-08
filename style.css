@@ -1,8 +1,3 @@
-/* ==========================================
-   DOZARI TEAM - PROFESSIONAL RACING STYLESHEET
-   Strictly NO !important allowed.
-   ========================================== */
-
 :root {
     --bg-primary: #121316;
     --bg-secondary: #18191d;
@@ -196,7 +191,6 @@ img {
 h2 {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 900;
-    font-style: italic;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--text-main);
@@ -456,12 +450,12 @@ h2 {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    box-sizing: border-box; /* ВАЖНО: не дает тексту уезжать за экран */
+    box-sizing: border-box;
     height: 100%;
     min-height: 100vh;
     padding-top: 80px;
-    padding-left: clamp(32px, 8vw, 130px);
-    padding-right: 30px; /* Отступ справа от края */
+    padding-left: clamp(80px, 10vw, 180px); /* Увеличен левый отступ для текста */
+    padding-right: 30px;
 }
 
 .hero__left {
@@ -509,7 +503,6 @@ h2 {
     min-width: 0;
     font-size: clamp(2.1rem, 2.9vw, 3.25rem);
     font-weight: 900;
-    font-style: italic;
     line-height: 1.1;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -908,7 +901,6 @@ h2 {
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    background-image: url('images/slide5.jpg');
     margin-top: 42px;
 }
 
@@ -1696,12 +1688,23 @@ h2 {
 }
 
 .footer__col:first-child {
-    text-align: center;
+    text-align: left;
 }
 
 .footer__col:first-child .footer__desc {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Mobile: center the first column */
+@media (max-width: 768px) {
+    .footer__col:first-child {
+        text-align: center;
+    }
+    .footer__col:first-child .footer__desc {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 .footer__col h4 {
@@ -2367,15 +2370,35 @@ h2 {
 /* === ПИЛОТ: БАЗОВЫЕ НАСТРОЙКИ === */
 .hero__center {
     position: absolute;
-    bottom: -70px; /* Опускаем ниже границы блока — колёса заходят на philosophy */
+    bottom: -70px;
     z-index: 3;
     pointer-events: none;
+    animation: pilotEnter 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    transform: translate(-150px, -80px);
+    will-change: transform, opacity;
 }
 .hero__center img {
-    width: 100%;
+    width: 85%;
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
+    will-change: transform;
+}
+
+@keyframes pilotEnter {
+    0% {
+        opacity: 0;
+        transform: translate(-150px, -80px);
+    }
+    60% {
+        opacity: 1;
+        transform: translate(10px, 5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
 }
 
 /* === ТЕЛЕФОНЫ (До 767px) === */
@@ -2387,7 +2410,7 @@ h2 {
     }
     .hero__center img {
         object-position: bottom center;
-        transform: scale(1.5); /* Крупный план: кулак достаёт до кнопки */
+        transform: scale(2.3); /* Крупный план: кулак достаёт до кнопки */
         transform-origin: bottom center;
     }
 }
@@ -2416,14 +2439,15 @@ h2 {
 /* === НОУТБУКИ (1025px - 1365px) === */
 @media (min-width: 1025px) and (max-width: 1365px) {
     .hero__center {
-        right: 0;
+        right: -3vw;
         left: auto;
-        width: 60vw; /* Шире — пилот крупнее */
-        height: calc(100vh - 85px); /* От низа до хэдера */
+        width: 62vw;
+        height: calc(100vh - 85px);
+        bottom: -50px;
     }
     .hero__center img {
         object-position: bottom right;
-        transform: scale(1.3); /* Кулак указывает на хэдер */
+        transform: scale(1.35);
         transform-origin: bottom right;
     }
 }
@@ -2431,14 +2455,139 @@ h2 {
 /* === ПК (От 1366px) === */
 @media (min-width: 1366px) {
     .hero__center {
-        right: 0;
+        right: -13vw; /* Сильно правее — сдвиг вправо */
         left: auto;
-        width: 55vw;
-        height: calc(100vh - 80px); /* Во весь рост: колёса на границе, кулак в хэдер */
+        width: 60vw; /* Размер как был */
+        height: calc(100vh - 80px);
+        bottom: -60px;
     }
     .hero__center img {
         object-position: bottom right;
-        transform: scale(1.4);
+        transform: scale(1.45); /* Масштаб как был */
         transform-origin: bottom right;
+    }
+}
+
+/* === КАРУСЕЛИ НА МОБИЛЬНЫХ (Философия и Формула) === */
+@media (max-width: 768px) {
+    /* Скрываем десктопные сетки на мобильных */
+    .philosophy__cards,
+    .formula__grid {
+        display: none;
+    }
+
+    /* Показываем карусели на мобильных */
+    .philosophy__carousel,
+    .formula__carousel {
+        display: block;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .philosophy__track,
+    .formula__track {
+        display: flex;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+    }
+
+    .philosophy__track .phil-card,
+    .formula__track .formula-col {
+        flex: 0 0 100%;
+        min-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 8px;
+    }
+
+    /* Стрелки карусели */
+    .philosophy__arrow,
+    .formula__arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        font-size: 1.5rem;
+        color: var(--text-main);
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .philosophy__arrow:hover,
+    .formula__arrow:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+    }
+
+    .philosophy__arrow--prev,
+    .formula__arrow--prev {
+        left: -20px;
+    }
+
+    .philosophy__arrow--next,
+    .formula__arrow--next {
+        right: -20px;
+    }
+
+    /* На узких экранах стрелки внутри */
+    @media (max-width: 480px) {
+        .philosophy__arrow--prev,
+        .formula__arrow--prev {
+            left: 8px;
+        }
+        .philosophy__arrow--next,
+        .formula__arrow--next {
+            right: 8px;
+        }
+    }
+
+    /* Индикаторы (точки) - опционально */
+    .philosophy__dots,
+    .formula__dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .philosophy__dot,
+    .formula__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--border-color);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .philosophy__dot.active,
+    .formula__dot.active {
+        background: var(--accent);
+        width: 24px;
+        border-radius: 4px;
+    }
+}
+
+/* На десктопе карусели скрыты, показываем обычную сетку */
+@media (min-width: 769px) {
+    .philosophy__carousel,
+    .formula__carousel {
+        display: none;
+    }
+    .philosophy__cards {
+        display: grid;
+    }
+    .formula__grid {
+        display: grid;
     }
 }
