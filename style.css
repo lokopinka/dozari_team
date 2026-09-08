@@ -934,7 +934,7 @@ h2 {
     position: absolute;
     inset: 0 15px;
     content: '';
-    background: url('images/Russia1.png') center / cover no-repeat;
+    background: url('images/Russia.png') center / cover no-repeat;
     opacity: 0.5;
     z-index: 1;
     pointer-events: none;
