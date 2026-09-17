@@ -1012,6 +1012,68 @@ h2 {
     color: var(--text-muted);
 }
 
+/* Management Section */
+.management {
+    padding: 100px 0;
+    background-color: var(--bg-primary);
+}
+
+.management__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.management-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.management-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+.management-card__img {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+}
+
+.management-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.management-card:hover .management-card__img img {
+    transform: scale(1.05);
+}
+
+.management-card__content {
+    padding: 24px;
+    text-align: center;
+}
+
+.management-card__content h3 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    font-style: italic;
+    margin-bottom: 5px;
+    color: var(--text-main);
+}
+
+.management-card__role {
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
 /* Athletes Section */
 .athletes {
     padding: 100px 0;
@@ -1028,8 +1090,8 @@ h2 {
 
 .athletes__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
 }
 
 .athlete-card {
@@ -1047,7 +1109,7 @@ h2 {
 
 .athlete-card__img {
     position: relative;
-    height: 360px;
+    aspect-ratio: 3/4;
     overflow: hidden;
 }
 
@@ -1068,7 +1130,7 @@ h2 {
     right: 20px;
     background: var(--accent);
     color: #ffffff;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
     padding: 6px 12px;
     text-transform: uppercase;
@@ -1076,38 +1138,22 @@ h2 {
 }
 
 .athlete-card__content {
-    padding: 30px;
+    padding: 24px;
 }
 
 .athlete-card__content h3 {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 900;
     font-style: italic;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: var(--text-main);
 }
 
-.athlete-card__role {
+.athlete-card__title {
     font-size: 0.85rem;
     color: var(--accent);
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-.athlete-card__stats {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-top: 1px solid var(--border-color);
-    padding-top: 15px;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.athlete-card__stats li span {
-    color: var(--text-main);
-    font-weight: 600;
+    font-weight: 500;
+    line-height: 1.4;
 }
 
 /* Media Section */
@@ -1704,6 +1750,11 @@ h2 {
     .footer__col:first-child .footer__desc {
         margin-left: auto;
         margin-right: auto;
+    }
+    .footer__col:first-child .logo {
+        display: inline-flex;
+        justify-content: center;
+        margin: 0 auto;
     }
 }
 
@@ -2576,6 +2627,64 @@ h2 {
         width: 24px;
         border-radius: 4px;
     }
+
+    /* Management Section Mobile */
+    .management {
+        padding: 60px 0;
+    }
+    .management__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .management-card__img {
+        height: 180px;
+    }
+    .management-card__content {
+        padding: 16px;
+    }
+    .management-card__content h3 {
+        font-size: 1rem;
+    }
+    .management-card__role {
+        font-size: 0.75rem;
+    }
+
+    /* Athletes Section Mobile - CSS Carousel */
+    .athletes__grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding: 8px 16px 16px;
+        margin: 0 -16px;
+        scroll-padding: 0 16px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .athletes__grid::-webkit-scrollbar {
+        display: none;
+    }
+    .athletes__grid {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .athlete-card {
+        flex: 0 0 calc(100% - 32px);
+        min-width: calc(100% - 32px);
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+    }
+    .athlete-card__img {
+        aspect-ratio: 3/4;
+    }
+    .athlete-card__content {
+        padding: 16px;
+    }
+    .athlete-card__content h3 {
+        font-size: 1rem;
+    }
+    .athlete-card__title {
+        font-size: 0.8rem;
+    }
 }
 
 /* На десктопе карусели скрыты, показываем обычную сетку */
@@ -2589,5 +2698,17 @@ h2 {
     }
     .formula__grid {
         display: grid;
+    }
+
+    /* Athletes Section Desktop - 4 columns grid */
+    .athletes__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+    .athlete-card {
+        flex: none;
+        min-width: auto;
+        scroll-snap-align: none;
     }
 }

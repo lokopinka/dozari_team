@@ -507,4 +507,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ensureDotsContainer('philosophyCarousel', 'philosophy__dots');
     ensureDotsContainer('formulaCarousel', 'formula__dots');
+    // Fix iOS hero height (prevent pilot compression on scroll)
+    const heroLayout = document.querySelector('.hero__layout');
+    if (heroLayout) {
+        const headerHeight = 80; // px, высота шапки
+        function setHeroHeight() {
+            heroLayout.style.height = 'calc(100vh - ' + headerHeight + 'px)';
+        }
+        setHeroHeight();
+        window.addEventListener('resize', setHeroHeight);
+    }
 });
