@@ -21,10 +21,8 @@
             <nav class="nav" id="navMenu">
                 <ul class="nav__list">
                     <li><a href="#about" class="nav__link">О команде</a></li>
-                    <li><a href="#system" class="nav__link">Система</a></li>
                     <li><a href="#program" class="nav__link">Гоночная программа</a></li>
                     <li><a href="#athletes" class="nav__link">Пилоты</a></li>
-                    <li><a href="#media" class="nav__link">Медиа</a></li>
                     <li><a href="#contacts" class="nav__link">Контакты</a></li>
                 </ul>
             </nav>
@@ -63,11 +61,8 @@
 
             <!-- 3. Основная сетка контента -->
             <div class="hero__layout">
-                
-                <!-- ЛЕВАЯ ЧАСТЬ: Заголовок и кнопки -->
-                <div class="hero__left">
-            <div class="hero__badge">DOZARI TEAM</div>
-            
+            <!-- ЛЕВАЯ ЧАСТЬ: Заголовок и кнопки -->
+            <div class="hero__left">
             <!-- Единый крупный заголовок -->
             <h1 class="hero__title">
                 ПРОФЕССИОНАЛЬНАЯ ГОНОЧНАЯ КОМАНДА ПО КАРТИНГУ, ГДЕ НАЧИНАЮТСЯ КАРЬЕРЫ <span class="accent-green">ПИЛОТОВ</span>
@@ -87,193 +82,143 @@
             </div>
         </section>
 
-        <!-- Блок 1: Наша философия -->
+        <!-- Блок 1: Кто мы -->
         <section class="philosophy" id="about">
             <div class="container philosophy__container">
-                <div class="philosophy__info">
+                <div class="philosophy__header">
                     <span class="section-tag section-tag--dashes"><span class="dash"></span>НАША ФИЛОСОФИЯ<span class="dash"></span></span>
-                    <h2 class="philosophy__title">ТАЛАНТ ПОЛУЧАЕТ <span class="accent-green">СИСТЕМУ</span></h2>
-                    <p class="philosophy__desc">
-                        Мы верим, что чемпионов рождает не случай. Мы создаем среду, где талант превращается в результат благодаря системе, опыту и полной вовлеченности команды.
-                    </p>
-                    <a href="https://школа-картинга.рф/" target="_blank" rel="noopener noreferrer" class="btn btn--primary philosophy-btn"><span>ПОДРОБНЕЕ О НАС →</span></a>
-                </div>
-
-                <!-- Десктоп: обычная сетка -->
-                <div class="philosophy__cards">
-                    <div class="phil-card">
-                        <img src="images/slide1.jpg" alt="Индивидуальный подход" class="phil-card__img">
-                        <div class="phil-card__overlay"></div>
-                        <div class="phil-card__content">
-                            <div class="phil-card__icon">
-                                <img src="images/icon_helmet_G.png" alt="" class="local-icon">
-                            </div>
-                            <h3 class="phil-card__title">ИНДИВИДУАЛЬНЫЙ<br>ПОДХОД</h3>
-                            <p class="phil-card__text">Каждый пилот — уникальный проект</p>
-                        </div>
-                    </div>
-
-                    <div class="phil-card">
-                        <img src="images/slide2.jpg" alt="Полный цикл подготовки" class="phil-card__img">
-                        <div class="phil-card__overlay"></div>
-                        <div class="phil-card__content">
-                            <div class="phil-card__icon">
-                                <img src="images/icon_kart_G.png" alt="" class="local-icon">
-                            </div>
-                            <h3 class="phil-card__title">ПОЛНЫЙ ЦИКЛ<br>ПОДГОТОВКИ</h3>
-                            <p class="phil-card__text">От тренировок до международных стартов</p>
-                        </div>
-                    </div>
-
-                    <div class="phil-card">
-                        <img src="images/slide3.jpg" alt="Результат и рост" class="phil-card__img">
-                        <div class="phil-card__overlay"></div>
-                        <div class="phil-card__content">
-                            <div class="phil-card__icon">
-                                <img src="images/icon_chart_G.png" alt="" class="local-icon">
-                            </div>
-                            <h3 class="phil-card__title">РЕЗУЛЬТАТ<br>И РОСТ</h3>
-                            <p class="phil-card__text">Победы сегодня — лидеры завтра</p>
-                        </div>
+                    <h2 class="philosophy__title"><span>КТО</span><span class="accent-green">МЫ</span></h2>
+                    <div class="philosophy__intro">
+                        <p class="philosophy__lead"><strong>DOZARI TEAM</strong> — гоночная команда, основанная&nbsp;в <span class="accent-green">2013</span>&nbsp;году.</p>
+                        <p class="philosophy__desc">Мы накопили огромный гоночный опыт и точно знаем, что необходимо для борьбы за самые высокие позиции.</p>
                     </div>
                 </div>
 
-                <!-- Мобильные: карусель -->
-                <div class="philosophy__carousel" id="philosophyCarousel">
-                    <div class="philosophy__track">
-                        <div class="phil-card">
-                            <img src="images/slide1.jpg" alt="Индивидуальный подход" class="phil-card__img">
-                            <div class="phil-card__overlay"></div>
-                            <div class="phil-card__content">
-                                <div class="phil-card__icon">
-                                    <img src="images/icon_helmet_G.png" alt="" class="local-icon">
+                <div class="philosophy__stats">
+                    <div class="philosophy__stat">
+                        <span class="philosophy__stat-num">13</span>
+                        <span class="philosophy__stat-label">лет в гоночном спорте</span>
+                    </div>
+                    <div class="philosophy__stat">
+                        <span class="philosophy__stat-num">20</span>
+                        <span class="philosophy__stat-label">титулов и кубков</span>
+                    </div>
+                    <div class="philosophy__stat">
+                        <span class="philosophy__stat-num">8</span>
+                        <span class="philosophy__stat-label">медальных сезонов</span>
+                    </div>
+                </div>
+
+                <div class="philosophy__panels">
+                    <!-- Инструменты -->
+                    <div class="phil-panel">
+                        <h3 class="phil-panel__title">Мы используем самые современные инструменты для достижения максимальных результатов:</h3>
+                        <ul class="phil-list">
+                            <li class="phil-list__item">
+                                <img class="phil-list__icon" src="images/icon_driver_G.png" alt="">
+                                <span class="phil-list__text">Мощные гоночные моторы</span>
+                            </li>
+                            <li class="phil-list__item">
+                                <img class="phil-list__icon" src="images/icon_chart_G.png" alt="">
+                                <span class="phil-list__text">Новейшие итальянские шасси</span>
+                            </li>
+                            <li class="phil-list__item">
+                                <img class="phil-list__icon" src="images/icon_wrench_G.png" alt="">
+                                <span class="phil-list__text">Профессиональная техническая подготовка</span>
+                            </li>
+                            <li class="phil-list__item">
+                                <img class="phil-list__icon" src="images/icon_kart_G.png" alt="">
+                                <span class="phil-list__text">Опытная команда и проверенная гоночная стратегия</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Достижения -->
+                    <div class="phil-panel phil-panel--accent">
+                        <h3 class="phil-panel__title">За плечами наших пилотов:</h3>
+                        <div class="phil-wreaths" aria-label="Золотые, серебряные и бронзовые награды">
+                            <div class="phil-wreaths__group" aria-label="4 золотых венка">
+                                <span class="phil-wreaths__label"><i class="phil-dot phil-dot--gold"></i>4 золота</span>
+                                <div class="phil-wreaths__items">
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2016</span>
+                                    </div>
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2017</span>
+                                    </div>
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2024</span>
+                                    </div>
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2025</span>
+                                    </div>
                                 </div>
-                                <h3 class="phil-card__title">ИНДИВИДУАЛЬНЫЙ<br>ПОДХОД</h3>
-                                <p class="phil-card__text">Каждый пилот — уникальный проект</p>
                             </div>
-                        </div>
-
-                        <div class="phil-card">
-                            <img src="images/slide2.jpg" alt="Полный цикл подготовки" class="phil-card__img">
-                            <div class="phil-card__overlay"></div>
-                            <div class="phil-card__content">
-                                <div class="phil-card__icon">
-                                    <img src="images/icon_kart_G.png" alt="" class="local-icon">
+                            <div class="phil-wreaths__group" aria-label="3 серебряных венка">
+                                <span class="phil-wreaths__label"><i class="phil-dot phil-dot--silver"></i>3 серебра</span>
+                                <div class="phil-wreaths__items">
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/silver.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2016</span>
+                                    </div>
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/silver.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2017</span>
+                                    </div>
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/silver.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2023</span>
+                                    </div>
                                 </div>
-                                <h3 class="phil-card__title">ПОЛНЫЙ ЦИКЛ<br>ПОДГОТОВКИ</h3>
-                                <p class="phil-card__text">От тренировок до международных стартов</p>
                             </div>
-                        </div>
-
-                        <div class="phil-card">
-                            <img src="images/slide3.jpg" alt="Результат и рост" class="phil-card__img">
-                            <div class="phil-card__overlay"></div>
-                            <div class="phil-card__content">
-                                <div class="phil-card__icon">
-                                    <img src="images/icon_chart_G.png" alt="" class="local-icon">
+                            <div class="phil-wreaths__group" aria-label="1 бронзовый венок">
+                                <span class="phil-wreaths__label"><i class="phil-dot phil-dot--bronze"></i>1 бронза</span>
+                                <div class="phil-wreaths__items">
+                                    <div class="phil-wreath__wrapper">
+                                        <img class="phil-wreath" src="images/bronze.png" alt="" aria-hidden="true">
+                                        <span class="phil-wreath__year">2018</span>
+                                    </div>
                                 </div>
-                                <h3 class="phil-card__title">РЕЗУЛЬТАТ<br>И РОСТ</h3>
-                                <p class="phil-card__text">Победы сегодня — лидеры завтра</p>
                             </div>
                         </div>
-                    </div>
-                    <button class="philosophy__arrow philosophy__arrow--prev" aria-label="Предыдущая карточка">‹</button>
-                    <button class="philosophy__arrow philosophy__arrow--next" aria-label="Следующая карточка">›</button>
-                    <div class="philosophy__dots" aria-label="Навигация по карточкам"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Блок 2: Наша формула -->
-        <section class="formula" id="system">
-            <div class="container formula__container">
-                <div class="formula__info">
-                    <span class="section-tag section-tag--dashes"><span class="dash"></span>НАША ФОРМУЛА<span class="dash"></span></span>
-                    <h2 class="formula__title">
-                        1 ПИЛОТ<br>
-                        1 МАШИНА<br>
-                        <span class="accent-green">1 МЕХАНИК</span>
-                    </h2>
-                    <p class="formula__desc">
-                        Каждый пилот DOZARI TEAM имеет свою машину и личного механика. Мы работаем как единый организм, где каждая деталь важна.
-                    </p>
-                </div>
-
-                <!-- Десктоп: обычная сетка -->
-                <div class="formula__grid">
-                    <div class="formula-col">
-                        <div class="formula-col__watermark">01</div>
-                        <div class="formula-col__photo">
-                            <img src="images/pilot.jpg" alt="Пилот" loading="lazy">
-                        </div>
-                        <div class="formula-col__content">
-                            <h3 class="formula-col__title">ПИЛОТ</h3>
-                            <p class="formula-col__text">Тренировки, анализ, ментальная подготовка, гонки и рост.</p>
-                        </div>
-                    </div>
-
-                    <div class="formula-col">
-                        <div class="formula-col__watermark">02</div>
-                        <div class="formula-col__photo">
-                            <img src="images/cart.jpg" alt="Машина" loading="lazy">
-                        </div>
-                        <div class="formula-col__content">
-                            <h3 class="formula-col__title">МАШИНА</h3>
-                            <p class="formula-col__text">Индивидуальная настройка, постоянное развитие, только лучшее оборудование.</p>
-                        </div>
-                    </div>
-
-                    <div class="formula-col">
-                        <div class="formula-col__watermark">03</div>
-                        <div class="formula-col__photo">
-                            <img src="images/repair.jpg" alt="Механик" loading="lazy">
-                        </div>
-                        <div class="formula-col__content">
-                            <h3 class="formula-col__title">МЕХАНИК</h3>
-                            <p class="formula-col__text">Личный механик - ваша поддержка и опора для уверенных побед.</p>
+                        <div class="phil-awards">
+                            <div class="phil-award phil-award--gold">
+                                <span class="phil-award__num">2</span>
+                                <span class="phil-award__label">Чемпионства России</span>
+                            </div>
+                            <div class="phil-award phil-award--silver">
+                                <span class="phil-award__num">2</span>
+                                <span class="phil-award__label">Вице-чемпионства России</span>
+                            </div>
+                            <div class="phil-award phil-award--bronze">
+                                <span class="phil-award__num">2</span>
+                                <span class="phil-award__label">Бронзовые призёрства чемпионата России</span>
+                            </div>
+                            <div class="phil-award phil-award--gold">
+                                <span class="phil-award__num">6</span>
+                                <span class="phil-award__label">Кубков России</span>
+                            </div>
+                            <div class="phil-award phil-award--gold">
+                                <span class="phil-award__num">2</span>
+                                <span class="phil-award__label">Чемпионства Rotax</span>
+                            </div>
+                            <div class="phil-award phil-award--gold">
+                                <span class="phil-award__num">6</span>
+                                <span class="phil-award__label">Кубков ЦФО/ЮФО</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Мобильные: карусель -->
-                <div class="formula__carousel" id="formulaCarousel">
-                    <div class="formula__track">
-                        <div class="formula-col">
-                            <div class="formula-col__watermark">01</div>
-                            <div class="formula-col__photo">
-                                <img src="images/pilot.jpg" alt="Пилот" loading="lazy">
-                            </div>
-                            <div class="formula-col__content">
-                                <h3 class="formula-col__title">ПИЛОТ</h3>
-                                <p class="formula-col__text">Тренировки, анализ, ментальная подготовка, гонки и рост.</p>
-                            </div>
-                        </div>
-
-                        <div class="formula-col">
-                            <div class="formula-col__watermark">02</div>
-                            <div class="formula-col__photo">
-                                <img src="images/cart.jpg" alt="Машина" loading="lazy">
-                            </div>
-                            <div class="formula-col__content">
-                                <h3 class="formula-col__title">МАШИНА</h3>
-                                <p class="formula-col__text">Индивидуальная настройка, постоянное развитие, только лучшее оборудование.</p>
-                            </div>
-                        </div>
-
-                        <div class="formula-col">
-                            <div class="formula-col__watermark">03</div>
-                            <div class="formula-col__photo">
-                                <img src="images/repair.jpg" alt="Механик" loading="lazy">
-                            </div>
-                            <div class="formula-col__content">
-                                <h3 class="formula-col__title">МЕХАНИК</h3>
-                                <p class="formula-col__text">Личный механик отвечает за технику, настройку и результат на трассе.</p>
-                            </div>
-                        </div>
+                <div class="philosophy__footer">
+                    <p class="philosophy__quote">Мы не просто участвуем в гонках — мы создаём пилотов, которые умеют бороться за <span class="accent-green">победу</span>.</p>
+                    <div class="philosophy__cta">
+                        <a href="https://школа-картинга.рф/" target="_blank" rel="noopener noreferrer" class="btn btn--primary philosophy-btn"><span>ПОДРОБНЕЕ О НАС →</span></a>
                     </div>
-                    <button class="formula__arrow formula__arrow--prev" aria-label="Предыдущая карточка">‹</button>
-                    <button class="formula__arrow formula__arrow--next" aria-label="Следующая карточка">›</button>
-                    <div class="formula__dots" aria-label="Навигация по карточкам"></div>
                 </div>
             </div>
         </section>
@@ -284,10 +229,10 @@
                 <div class="program__top">
                     <div class="section-header-left">
                         <span class="section-tag section-tag--dashes"><span class="dash"></span>ГОНОЧНАЯ ПРОГРАММА<span class="dash"></span></span>
-                        <h2>ВЕСЬ ГОНОЧНЫЙ <br><span class="accent-green">ПРОЦЕСС</span></h2>
+                        <h2><span>ВЕСЬ</span><span>ГОНОЧНЫЙ</span><span class="accent-green">ПРОЦЕСС</span></h2>
                     </div>
                     <div class="program__image-banner">
-                        <img src="images/race.jpg" alt="Гонка" class="program__image-banner">
+                        <img src="images/race.jpg" alt="Гонка">
                     </div>
                 </div>
                 <div class="program__layout">
@@ -346,7 +291,7 @@
             <div class="container">
                 <div class="path__wrapper">
                     <div class="path__info">
-                        <span class="section-tag section-tag--dashes"><span class="dash"></span>НАШ ПУТЬ<span class="dash"></span></span>
+                        <span class="section-tag section-tag--dashes"><span class="dash"></span>ПУТЬ ПИЛОТА<span class="dash"></span></span>
                         <h2>РОССИЯ → МИР</h2>
                         <p>Мы выступаем на главных трассах России, боремся за титул чемпиона страны и даем возможность талантливым пилотам представлять Россию на чемпионате мира.</p>
                     </div>
@@ -402,11 +347,11 @@
                     </div>
                     <div class="management-card">
                         <div class="management-card__img">
-                            <img src="images/repair2.jpg" alt="Главный механик" loading="lazy">
+                            <img src="images/ivan_nosov.jpg" alt="Тренер" loading="lazy">
                         </div>
                         <div class="management-card__content">
                             <h3>ИВАН НОСОВ</h3>
-                            <p class="management-card__role">Главный механик</p>
+                            <p class="management-card__role">Тренер</p>
                         </div>
                     </div>
                 </div>
@@ -497,22 +442,6 @@
             </div>
         </section>
 
-        <!-- Медиа -->
-        <section class="media-contacts" id="media">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag section-tag--dashes"><span class="dash"></span>ПРЕСС-ЦЕНТР<span class="dash"></span></span>
-                    <h2>МЕДИА И СОБЫТИЯ</h2>
-                </div>
-                <div class="media__grid" id="mediaGrid">
-                    <div class="media-card-skeleton">Загрузка новостей...</div>
-                </div>
-                <div class="media__more-btn">
-                    <a href="https://vk.ru/dozarikart" class="btn btn--outline" target="_blank" rel="noopener noreferrer"><span>Смотреть больше →</span></a>
-                </div>
-            </div>
-        </section>
-
         <!-- Заявка на вступление (Контакты) -->
         <section class="contacts" id="contacts">
             <div class="contacts__bg-overlay"></div>
@@ -525,12 +454,9 @@
                         
                         <ul class="contacts__list">
                             <li>
-                                <div class="contacts__icon-box">
-                                    <img src="images/icon_helmet.png" alt="Телефон" class="contact-png">
-                                </div>
                                 <div>
                                     <strong>Телефон:</strong>
-                                    <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                                    <a href="tel:+79055496006">+7 (905) 549-60-06</a>
                                 </div>
                             </li>
                         </ul>
@@ -565,8 +491,8 @@
                                 <textarea id="userExp" name="experience" rows="3" placeholder="Расскажите о вашем опыте"></textarea>
                             </div>
                             <div class="form__checkbox-group">
-                                <input type="checkbox" id="privacyPolicy" name="privacy" required checked>
-                                <label for="privacyPolicy">Принимаю <a href="#" id="openPolicyModal">Политику конфиденциальности</a></label>
+                                <input type="checkbox" id="privacyPolicy" name="privacy" required>
+                                <label for="privacyPolicy">Принимаю <a href="policy.html">Политику конфиденциальности и обработки персональных данных</a></label>
                             </div>
                             <button type="submit" class="btn btn--primary form__submit"><span>ОТПРАВИТЬ ЗАЯВКУ →</span></button>
                             <div id="formMessage" class="form__message"></div>
@@ -585,13 +511,12 @@
                     <img src="images/logo_l.png" alt="DOZARI TEAM" class="logo__image logo__image--light">
                     <img src="images/logo_b.png" alt="" aria-hidden="true" class="logo__image logo__image--dark">
                 </a>
-                <p class="footer__desc">Профессиональная гоночная команда. Воспитываем чемпионов.</p>
+                <p class="footer__desc">Профессиональная гоночная команда DOZARI TEAM.</p>
             </div>
             <div class="footer__col">
                 <h4>Навигация</h4>
                 <ul>
                     <li><a href="#about">О команде</a></li>
-                    <li><a href="#system">Система</a></li>
                     <li><a href="#program">Программа</a></li>
                     <li><a href="#athletes">Пилоты</a></li>
                 </ul>
@@ -599,15 +524,15 @@
             <div class="footer__col">
                 <h4>Контакты</h4>
                 <ul>
-                    <li><a href="tel:+79991234567">+7 (999) 123-45-67</a></li>
-                    <li><a href="mailto:director@dozari-karting.ru">director@dozari-karting.ru</a></li>
+                    <li><a href="tel:+79055496006">+7 (905) 549-60-06</a></li>
+                    <li><a href="mailto:mail@dozarikart.ru">mail@dozarikart.ru</a></li>
                     <li><a href="https://yandex.ru/maps/-/CCUj5OsmTC" target="_blank" rel="noopener noreferrer">МКАД, 2-й километр, ТЦ «Шоколад», крытый паркинг, уровень «Е»</a></li>
                 </ul>
             </div>
             <div class="footer__col">
                 <h4>Документы</h4>
                 <ul>
-                    <li><a href="#" id="openPolicyModalFooter">Политика конфиденциальности</a></li>
+                    <li><a href="policy.html">Политика конфиденциальности и обработки персональных данных</a></li>
                 </ul>
             </div>
             <div class="footer__col footer__social-col">
@@ -638,11 +563,17 @@
         <div class="cookie-banner__content">
             <p>Мы используем cookie, чтобы сайт работал корректно. Продолжая пользоваться сайтом, вы соглашаетесь с их использованием.</p>
             <div class="cookie-banner__actions">
-                <a href="#" id="openPolicyModalCookie">Политика конфиденциальности</a>
+                <a href="policy.html">Политика конфиденциальности</a>
                 <button class="btn btn--primary cookie-banner__accept" id="acceptCookiesBtn" type="button"><span>Принять</span></button>
             </div>
         </div>
     </aside>
+
+    <!-- Промо-стикер «Гонка от 250 т.р.» -->
+    <a href="#contacts" class="promo-sticker" aria-label="Акция: гонка от 250 тысяч рублей — оставить заявку">
+        <span class="promo-sticker__label">Гонка</span>
+        <span class="promo-sticker__value">от 250 т.р.</span>
+    </a>
 
     <!-- Модальное окно: Просмотр новости (Медиа) -->
     <div class="modal-overlay" id="mediaModal">
@@ -655,25 +586,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Модальное окно: Политика конфиденциальности -->
-    <div class="modal-overlay" id="policyModal">
-        <div class="modal-content">
-            <button class="modal-close" id="closePolicyModal" aria-label="Закрыть">×</button>
-            <h2>Политика конфиденциальности</h2>
-            <div class="modal-body">
-                <p>Настоящая Политика конфиденциальности персональных данных действует в отношении всей информации, которую сайт DOZARI TEAM может получить о Пользователе во время использования сайта.</p>
-                <h3>1. Сбор персональных данных</h3>
-                <p>Мы собираем информацию, которую вы предоставляете при заполнении формы заявки (имя, возраст, город, телефон, опыт).</p>
-                <h3>2. Использование данных</h3>
-                <p>Полученные данные используются исключительно для связи с вами, организации тестовых заездов и улучшения качества наших услуг.</p>
-                <h3>3. Защита информации</h3>
-                <p>Команда DOZARI TEAM принимает все необходимые меры для защиты ваших персональных данных от несанкционированного доступа.</p>
-            </div>
-            <button class="btn btn--primary modal-btn-close" id="acceptPolicyBtn"><span>Понятно</span></button>
-        </div>
-    </div>
-
     <script src="script.js" defer></script>
 </body>
 </html>

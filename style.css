@@ -16,6 +16,10 @@
     --border-light: rgba(255, 255, 255, 0.08);
     --image-overlay: rgba(18, 19, 22, 0.9);
     --path-panel: rgba(18, 19, 22, 0.72);
+    /* Чередующиеся фоновые тона секций (тёмная тема — графит, шаг в полтона) */
+    --tone-dark: #131418;
+    --tone-light: #17181c;
+    --card-surface: #1b1d22;
     --font-main: 'Montserrat', sans-serif;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -38,6 +42,10 @@
     --border-light: rgba(0, 0, 0, 0.08);
     --image-overlay: rgba(18, 19, 22, 0.9);
     --path-panel: rgba(255, 255, 255, 0.78);
+    /* Чередующиеся фоновые тона секций (светлая тема — белый, шаг в полтона) */
+    --tone-dark: #f9fafb;
+    --tone-light: #ffffff;
+    --card-surface: #f6f7f9;
 }
 
 /* Reset & Base Styles */
@@ -169,9 +177,11 @@ img {
 .philosophy-btn {
     background-color: var(--accent);
     color: #ffffff;
-    padding: 14px 28px;
+    padding: 18px 40px;
     border-radius: 4px;
     display: inline-flex;
+    font-size: 1rem;
+    white-space: nowrap;
     transform: none; /* Убираем лишний скос */
 }
 .philosophy-btn span {
@@ -469,33 +479,13 @@ h2 {
 }
 
 /* Обводка (тень) текста — делаем аккуратнее, убираем «грязь» */
-.hero__badge, 
-.hero__title, 
+.hero__title,
 .hero__subtitle {
     font-size: clamp(1.15rem, 1.5vw, 1.4rem); /* Увеличили размер шрифта */
     font-weight: 500; /* Сделали буквы чуть плотнее, чтобы они не терялись */
     color: #ffffff; /* Заменили сероватый на кристально белый */
     line-height: 1.6;
     margin-bottom: 40px;
-}
-
-.hero__badge {
-    display: inline-block;
-    width: max-content;
-    max-width: 100%;
-    white-space: nowrap;
-    margin-left: 3px;
-    padding: 6px 14px;
-    background: rgba(5, 12, 7, 0.72);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    font-size: clamp(0.7rem, 0.75vw, 1rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: clamp(1px, 0.15vw, 2px);
-    margin-bottom: 20px;
-    transform: skewX(-10deg);
-    transform-origin: left center;
 }
 .hero__title {
     width: 100%;
@@ -535,7 +525,6 @@ h2 {
     color: #ffffff;
     white-space: nowrap; /* СТРОГО В ОДНУ ЛИНИЮ: запрещаем тексту переноситься */
 }
-
 
 
 /* Правая часть: Иконки */
@@ -601,211 +590,615 @@ h2 {
    БЛОК 1: НАША ФИЛОСОФИЯ
    ========================================================================== */
 .philosophy {
-    padding: 100px 0;
-    background-color: var(--bg-secondary);
+    position: relative;
+    scroll-margin-top: 92px;
+    padding: clamp(72px, 8vw, 112px) 0 clamp(72px, 8vw, 120px);
+    overflow: clip;
+    background-color: var(--tone-dark);
 }
 
 .philosophy__container {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 50px;
-    align-items: center;
-}
-
-.philosophy__info h2 {
-    color: var(--text-main);
-    margin: 15px 0 20px;
-}
-
-.philosophy__desc {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 24px;
-}
-
-.philosophy__cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    margin-top: 42px;
-}
-
-.philosophy__cards {
-    clip-path: none;
-    background: var(--surface);
-}
-
-.formula__grid,
-.path__cards,
-.contacts__form-container {
-    margin-top: 42px;
-}
-
-.phil-card {
     position: relative;
-    height: 440px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 35px 25px;
-    border: 0;
-    outline: 0;
-    box-shadow: none;
-    overflow: hidden;
-    border-right: 0;
-}
-
-.phil-card:last-child {
-    border-right: none;
-}
-
-.phil-card__img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 0;
-    outline: 0;
     z-index: 1;
 }
 
-.phil-card__overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    background: linear-gradient(to top, rgba(10, 10, 12, 0.9) 20%, transparent 100%);
+/* ── Заголовок: редакционная двухколоночная сетка ── */
+.philosophy__header {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    column-gap: clamp(32px, 5vw, 84px);
+    row-gap: clamp(18px, 2.4vw, 30px);
+    align-items: end;
 }
 
-.phil-card__content {
-    position: relative;
-    z-index: 3;
+.philosophy__header .section-tag {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: start;
+    width: fit-content;
+    margin-bottom: 0;
 }
 
-.phil-card__icon {
-    color: var(--accent);
-    margin-bottom: 14px;
-    display: flex;
-}
-
-.local-icon {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    border: 0;
-}
-
-.phil-card__title {
-    font-size: 1rem;
-    font-weight: 900;
-    font-style: italic;
-    text-transform: uppercase;
-    color: #ffffff;
-    line-height: 1.2;
-    margin-bottom: 8px;
-}
-
-.phil-card__text {
-    font-size: 0.85rem;
-    color: #a0a5b0;
-    line-height: 1.5;
+.philosophy__title {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
     margin: 0;
-}
-
-/* ==========================================================================
-   БЛОК 2: НАША ФОРМУЛА (БЕЗ КРИВЫХ СКОСОВ У ФОТО, АККУРАТНЫЕ 6PX)
-   ========================================================================== */
-.formula {
-    padding: 100px 0;
-    background-color: var(--bg-primary);
-    border-top: 1px solid var(--border-light);
-}
-
-.formula__container {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 50px;
-    align-items: center;
-}
-
-.formula__info h2 {
+    font-size: clamp(2.4rem, 7.2vw, 6rem);
     color: var(--text-main);
-    margin: 15px 0 20px;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
 }
 
-.formula__desc {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
+.philosophy__title span {
+    display: block;
 }
 
-.formula__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+/* ── Заголовок занимает левую колонку между тегом и полосой над цифрами (десктоп) ── */
+@media (min-width: 1025px) {
+    .philosophy__title {
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: clamp(2.4rem, 7.2vw, 6rem);
+        line-height: 0.92;
+    }
 }
 
-.formula-col {
-    position: relative;
+.philosophy__intro {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
     display: flex;
     flex-direction: column;
+    gap: 14px;
+    min-width: 0;
 }
 
-.formula-col__watermark {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 110px;
-    font-weight: 900;
-    font-style: italic;
-    color: transparent;
-    -webkit-text-stroke: 2px var(--text-muted);
-    position: absolute;
-    top: 12px;
-    left: 10px;
-    z-index: 3;
-    opacity: 0.3;
-    pointer-events: none;
-    line-height: 1;
-}
-
-/* --- 2. ФОРМУЛА: Ровные картинки без кривых срезов --- */
-.formula-col__photo {
-    height: 240px;
-    border-radius: 6px;
-    clip-path: none; /* Убиваем сломанный нейросетью скос */
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-    margin-bottom: 20px;
-    width: 100%;
-}
-.formula-col__photo img {
-    transform: none;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.formula-col__content {
-    position: relative;
-    z-index: 2;
-}
-
-.formula-col__title {
-    font-size: 1.1rem;
-    font-weight: 900;
-    font-style: italic;
-    color: var(--text-main);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.formula-col__text {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.5;
+.philosophy__lead {
     margin: 0;
+    max-width: 640px;
+    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+    font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.45;
+    text-wrap: pretty;
+}
+
+.philosophy__lead strong {
+    font-weight: 800;
+}
+
+.philosophy__desc {
+    margin: 0;
+    max-width: 620px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.68;
+    text-wrap: pretty;
+}
+
+/* ── Ключевые цифры ── */
+.philosophy__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(18px, 3vw, 44px);
+    margin-top: clamp(34px, 4.6vw, 58px);
+    padding-top: clamp(24px, 3.2vw, 36px);
+    border-top: 1px solid var(--border-color);
+}
+
+.philosophy__stat {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    min-width: 0;
+}
+
+.philosophy__stat-num {
+    flex: 0 0 auto;
+    min-width: 1.4em;
+    font-size: clamp(2.1rem, 3.4vw, 3rem);
+    font-weight: 900;
+    font-style: italic;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+}
+
+.philosophy__stat-label {
+    max-width: 210px;
+    font-size: 0.86rem;
+    line-height: 1.35;
+    color: var(--text-muted);
+}
+
+/* ── Панели ── */
+.philosophy__panels {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(20px, 2.4vw, 32px);
+    margin-top: clamp(34px, 4.6vw, 56px);
+    align-items: stretch;
+}
+
+.phil-panel {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(24px, 2.8vw, 38px);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+}
+
+.phil-panel--accent {
+    background: var(--bg-card);
+    border-color: rgba(20, 168, 0, 0.32);
+}
+
+.phil-panel__title {
+    position: relative;
+    margin: 0 0 clamp(18px, 2vw, 26px);
+    padding: 0 0 18px;
+    font-size: clamp(0.95rem, 1.1vw, 1.06rem);
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.phil-panel__title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 54px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--accent);
+}
+
+/* ── Список инструментов ── */
+.phil-list {
+    list-style: none;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+}
+
+.phil-list__item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 14px;
+    border-radius: 16px;
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.phil-list__item:hover {
+    background: rgba(20, 168, 0, 0.08);
+    border-color: rgba(20, 168, 0, 0.28);
+    transform: translateX(6px);
+}
+
+.phil-list__icon {
+    flex: 0 0 58px;
+    width: 58px;
+    height: 58px;
+    padding: 14px;
+    object-fit: contain;
+    border-radius: 16px;
+    background: rgba(20, 168, 0, 0.09);
+    border: 1px solid rgba(20, 168, 0, 0.22);
+    transition: var(--transition);
+}
+
+.phil-list__item:hover .phil-list__icon {
+    background: rgba(20, 168, 0, 0.16);
+    border-color: rgba(20, 168, 0, 0.45);
+    transform: scale(1.05);
+}
+
+.phil-list__text {
+    font-size: 1rem;
+    color: var(--text-main);
+    line-height: 1.45;
+}
+
+/* ── Медали: строки по типу награды ── */
+.phil-wreaths {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0 0 clamp(20px, 2.4vw, 28px);
+    padding: 0 0 clamp(20px, 2.4vw, 28px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.phil-wreaths__group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+}
+
+.phil-wreaths__label {
+    flex: 0 0 auto;
+    min-width: 96px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.phil-dot {
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.phil-dot--gold {
+    background: #f5c451;
+}
+
+.phil-dot--silver {
+    background: #d3dae5;
+}
+
+.phil-dot--bronze {
+    background: #cf8244;
+}
+
+/* В светлой теме медальные точки делаем контрастнее */
+[data-theme="light"] .phil-dot--gold,
+[data-theme="light"] .phil-award--gold {
+    --medal: #dda71d;
+}
+
+[data-theme="light"] .phil-dot--gold {
+    background: #dda71d;
+}
+
+[data-theme="light"] .phil-dot--silver,
+[data-theme="light"] .phil-award--silver {
+    --medal: #94a2b5;
+}
+
+[data-theme="light"] .phil-dot--silver {
+    background: #94a2b5;
+}
+
+[data-theme="light"] .phil-dot--bronze,
+[data-theme="light"] .phil-award--bronze {
+    --medal: #b86a26;
+}
+
+[data-theme="light"] .phil-dot--bronze {
+    background: #b86a26;
+}
+
+.phil-wreaths__items {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 14px;
+    min-width: 0;
+}
+
+.phil-wreath__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+}
+
+.phil-wreath {
+    display: block;
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    transition: transform 0.25s ease;
+}
+
+.phil-wreath__wrapper:hover .phil-wreath {
+    transform: translateY(-3px) scale(1.06);
+}
+
+.phil-wreath__year {
+    font-family: var(--font-main);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* ── Достижения ── */
+.phil-awards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 clamp(20px, 2.4vw, 32px);
+    margin: 0;
+}
+
+.phil-award {
+    --medal: var(--accent);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.phil-award--gold {
+    --medal: #f5c451;
+}
+
+.phil-award--silver {
+    --medal: #d3dae5;
+}
+
+.phil-award--bronze {
+    --medal: #cf8244;
+}
+
+.phil-award:hover {
+    border-bottom-color: var(--accent);
+}
+
+.phil-award__num {
+    flex: 0 0 auto;
+    min-width: 34px;
+    font-size: 1.9rem;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+    color: var(--accent);
+}
+
+.phil-award__label {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding-top: 3px;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.phil-award__label::before {
+    content: '';
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: var(--medal);
+}
+
+/* ── Цитата + кнопка ── */
+.philosophy__footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(22px, 3.4vw, 52px);
+    margin-top: clamp(40px, 5vw, 64px);
+    padding: clamp(26px, 3vw, 38px) clamp(24px, 3vw, 44px);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+}
+
+.philosophy__quote {
+    margin: 0;
+    max-width: 760px;
+    font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text-main);
+    text-wrap: pretty;
+}
+
+.philosophy__cta {
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+/* ── Планшеты и небольшие ноутбуки ── */
+@media (max-width: 1024px) {
+    .philosophy__header {
+        grid-template-columns: 1fr;
+        row-gap: 18px;
+    }
+
+    .philosophy__title,
+    .philosophy__intro {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .philosophy__lead,
+    .philosophy__desc {
+        max-width: 720px;
+    }
+
+    .philosophy__panels {
+        grid-template-columns: 1fr;
+    }
+
+    .philosophy__footer {
+        grid-template-columns: 1fr;
+        justify-items: start;
+    }
+}
+
+/* ── Телефоны ── */
+@media (max-width: 768px) {
+    .philosophy__header {
+        row-gap: 16px;
+    }
+
+    /* Таг и заголовок центрируем так же, как в блоке «Гоночная программа» */
+    .philosophy__header .section-tag {
+        justify-self: stretch;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* «КТО МЫ» — в одну строку, по центру, крупнее, с воздухом до текста ниже */
+    .philosophy__title {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: baseline;
+        gap: 0.24em;
+        margin-top: 14px;
+        margin-bottom: 0.3em;
+        font-size: clamp(3rem, 12vw, 4rem);
+        text-align: center;
+    }
+
+    /* Текст после заголовка — чуть свободнее: небольшой отступ от краёв и воздух между строками */
+    .philosophy__intro {
+        gap: 14px;
+        padding: 0 8px;
+    }
+
+    .philosophy__lead {
+        line-height: 1.55;
+    }
+
+    .philosophy__desc {
+        line-height: 1.75;
+    }
+
+    .philosophy__stats {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .philosophy__stat-label {
+        max-width: none;
+    }
+
+    .phil-list__item {
+        padding: 10px 10px;
+    }
+
+    .phil-list__item:hover {
+        transform: none;
+    }
+
+    .philosophy__footer {
+        padding: 24px 20px;
+        gap: 20px;
+    }
+
+    .philosophy__cta {
+        width: 100%;
+    }
+
+    .philosophy-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ── Узкие телефоны ── */
+@media (max-width: 560px) {
+    .phil-panel {
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .philosophy__stats {
+        gap: 10px;
+    }
+
+    .philosophy__stat-num {
+        font-size: 2rem;
+    }
+
+    .phil-list__icon {
+        flex-basis: 46px;
+        width: 46px;
+        height: 46px;
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .phil-list__text {
+        font-size: 0.9rem;
+    }
+
+    .phil-wreaths__group {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .phil-wreaths__items {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .phil-wreaths__label {
+        min-width: 0;
+    }
+
+    .phil-wreath {
+        width: 38px;
+        height: 38px;
+    }
+
+    .phil-wreath__year {
+        font-size: 0.62rem;
+    }
+
+    .phil-awards {
+        grid-template-columns: 1fr;
+    }
+
+    .phil-award {
+        padding: 13px 0;
+    }
+}
+
+/* ── Уважение к настройке «уменьшить движение» ── */
+@media (prefers-reduced-motion: reduce) {
+    .phil-panel,
+    .phil-list__item,
+    .phil-list__icon,
+    .phil-wreath,
+    .phil-award {
+        transition: none;
+    }
+
+    .phil-list__item:hover,
+    .phil-list__item:hover .phil-list__icon,
+    .phil-wreath__wrapper:hover .phil-wreath {
+        transform: none;
+    }
+}
+
+.path__cards,
+.contacts__form-container {
+    margin-top: 42px;
 }
 
 /* ==========================================================================
@@ -813,15 +1206,23 @@ h2 {
    ========================================================================== */
 .program {
     padding: 100px 0;
-    background-color: var(--bg-secondary);
+    background-color: var(--tone-light);
 }
 
 .section-header-left {
-    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
 }
 
 .section-header-left h2 {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-top: 10px;
+    font-size: clamp(2.4rem, 7.2vw, 6rem);
+    line-height: 1;
 }
 
 .program__layout {
@@ -830,9 +1231,9 @@ h2 {
 
 .program__top {
     display: grid;
-    grid-template-columns: minmax(280px, 0.8fr) minmax(420px, 1.2fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     gap: 48px;
-    align-items: start;
+    align-items: stretch;
     margin-bottom: 42px;
 }
 
@@ -895,38 +1296,36 @@ h2 {
 .program__image-banner {
     position: relative;
     width: 100%;
-    min-height: 300px;
-    background-size: cover;
-    background-position: center;
+    align-self: start;
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     margin-top: 42px;
 }
 
-.program__image-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(18,19,22,0.1), rgba(18,19,22,0.4));
+.program__image-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
 }
 
 /* ==========================================================================
    БЛОК 4: НАШ ПУТЬ (ШИРОКИЙ КОНТЕЙНЕР, ФОНОВАЯ SVG КАРТА, БЕЗ РАМОК)
    ========================================================================== */
 .path-section {
-    padding: 130px 15px;
-    background-color: var(--bg-primary);
+    padding: 130px 0;
+    background-color: var(--tone-dark);
     position: relative;
     overflow: hidden;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
 }
 
 .path-section::after {
     position: absolute;
     inset: 0;
     content: '';
-    background: var(--bg-primary);
+    background: var(--tone-dark);
     z-index: 0;
 }
 
@@ -944,7 +1343,7 @@ h2 {
 .path__wrapper {
     position: relative;
     z-index: 2;
-    max-width: 1180px;
+    max-width: 100%;
     display: grid;
     grid-template-columns: 1fr 1.2fr;
     gap: 60px;
@@ -978,7 +1377,7 @@ h2 {
 }
 
 .path__info {
-    padding: 24px;
+    padding: 24px 24px 24px 0;
     border-radius: 4px;
     background: var(--path-panel);
 }
@@ -1015,7 +1414,7 @@ h2 {
 /* Management Section */
 .management {
     padding: 100px 0;
-    background-color: var(--bg-primary);
+    background-color: var(--tone-light);
 }
 
 .management__grid {
@@ -1025,7 +1424,7 @@ h2 {
 }
 
 .management-card {
-    background: var(--bg-secondary);
+    background: var(--card-surface);
     border: 1px solid var(--border-color);
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -1077,7 +1476,7 @@ h2 {
 /* Athletes Section */
 .athletes {
     padding: 100px 0;
-    background-color: var(--bg-secondary);
+    background-color: var(--tone-dark);
 }
 
 .section-header {
@@ -1095,7 +1494,7 @@ h2 {
 }
 
 .athlete-card {
-    background: var(--bg-secondary);
+    background: var(--card-surface);
     border: 1px solid var(--border-color);
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -1154,107 +1553,6 @@ h2 {
     color: var(--accent);
     font-weight: 500;
     line-height: 1.4;
-}
-
-/* Media Section */
-.media-contacts {
-    padding: 100px 0;
-    background-color: var(--bg-primary);
-}
-
-.media__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.media__more-btn {
-    text-align: center;
-}
-
-.media-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: var(--transition);
-}
-
-.media-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-5px);
-}
-
-.media-card__img {
-    height: 220px;
-    overflow: hidden;
-}
-
-.media-card__img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.media-card:hover .media-card__img img {
-    transform: scale(1.05);
-}
-
-.media-card__content {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.media-card__date {
-    font-size: 0.75rem;
-    color: var(--accent);
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
-
-.media-card__title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    line-height: 1.3;
-    color: var(--text-main);
-}
-
-.media-card__text {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    flex-grow: 1;
-}
-
-.media-card__link {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--accent);
-    text-transform: uppercase;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.media-card__link:hover {
-    color: var(--text-main);
-}
-
-.media-card-skeleton {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
-    font-style: italic;
 }
 
 /* Contacts & Form Section */
@@ -1489,6 +1787,121 @@ h2 {
     transform: translateY(-3px);
 }
 
+/* Promo Sticker — пульсирующий стикер с акцией */
+.promo-sticker {
+    position: fixed;
+    right: 30px;
+    bottom: 96px;
+    z-index: 2400;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 12px 22px 12px 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    line-height: 1.1;
+    text-align: left;
+    box-shadow: 0 12px 30px rgba(20, 168, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.35);
+    transform-origin: right bottom;
+    transition: bottom 0.35s ease, transform 0.25s ease, background 0.25s ease;
+    animation: promoStickerPulse 2.4s ease-in-out infinite;
+}
+
+/* Пока показан баннер cookie — поднимаем стикер, чтобы он его не перекрывал */
+.cookie-banner.show ~ .promo-sticker {
+    bottom: 164px;
+}
+
+.promo-sticker:hover,
+.promo-sticker:focus-visible {
+    background: linear-gradient(135deg, var(--accent-hover), var(--accent));
+    transform: translateY(-2px) scale(1.03);
+    animation: none;
+}
+
+.promo-sticker__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.9;
+}
+
+.promo-sticker__value {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+@keyframes promoStickerPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 12px 30px rgba(20, 168, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(20, 168, 0, 0.55);
+    }
+    60% {
+        transform: scale(1.05);
+        box-shadow: 0 14px 34px rgba(20, 168, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.35), 0 0 0 14px rgba(20, 168, 0, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 12px 30px rgba(20, 168, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(20, 168, 0, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    .promo-sticker {
+        right: 20px;
+        bottom: 88px;
+        padding: 10px 18px 10px 15px;
+        border-radius: 12px;
+    }
+
+    .cookie-banner.show ~ .promo-sticker {
+        bottom: 150px;
+    }
+
+    .promo-sticker__label {
+        font-size: 0.64rem;
+        letter-spacing: 1.2px;
+    }
+
+    .promo-sticker__value {
+        font-size: 0.92rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .promo-sticker {
+        right: 20px;
+        bottom: 74px;
+        padding: 8px 14px 8px 12px;
+    }
+
+    .cookie-banner.show ~ .promo-sticker {
+        bottom: 206px;
+    }
+
+    .promo-sticker__label {
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
+
+    .promo-sticker__value {
+        font-size: 0.85rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .promo-sticker {
+        animation: none;
+    }
+}
+
 .cookie-banner {
     position: fixed;
     left: 50%;
@@ -1597,124 +2010,13 @@ h2 {
     overflow-wrap: anywhere;
 }
 
-/* --- 5. МЕДИА МОДАЛКА: Дизайн окна (картинка сверху вплотную к краям) --- */
-.media-modal-content {
-    padding: 0; /* Убираем отступы, чтобы фото растянулось на 100% */
-    border-radius: 8px;
-    overflow: hidden;
-    max-width: 750px;
-    background: var(--bg-secondary);
-    color: var(--text-main);
-    position: relative;
-}
-.modal-close {
-    top: 15px;
-    right: 15px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    position: absolute;
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-}
-.modal-close:hover {
-    background: var(--accent);
-    color: #ffffff;
-}
-
-.modal-body {
-    overflow-y: auto;
-    max-height: 60vh;
-    padding-right: 10px;
-    margin-bottom: 25px;
-}
-
-.media-modal-body img {
-    width: 100%;
-    max-height: 380px;
-    object-fit: cover;
-    border-radius: 0;
-    margin-bottom: 20px;
-}
-
-.media-modal__image {
-    height: 320px;
-    display: block;
-}
-
-.media-modal__text {
-    padding: 30px;
-}
-
-.media-modal-body .modal-news-date {
-    font-size: 0.8rem;
-    color: var(--accent);
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.media-modal-body h2 {
-    font-size: 1.8rem;
-    margin: 0 0 15px;
-    color: var(--text-main);
-}
-
-.media-modal-body p {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 12px;
-}
-
-.media-modal-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-    border: 1px solid var(--border-color);
-    width: 45px;
-    height: 45px;
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
-    z-index: 10;
-    border-radius: 4px;
-}
-
-.media-modal-arrow:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-}
-
-.media-modal-prev {
-    left: -60px;
-}
-
-.media-modal-next {
-    right: -60px;
-}
-
 .modal-btn-close {
     align-self: flex-end;
 }
 
 /* Footer */
 .footer {
-    background-color: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
+    background-color: var(--tone-light);
     padding-top: 80px;
     color: var(--text-main);
 }
@@ -1895,9 +2197,7 @@ h2 {
     ========================================== */
 
 @media (max-width: 1365px) {
-    .program__layout,
-    .philosophy__container,
-    .formula__container {
+    .program__layout {
         grid-template-columns: 1fr;
         gap: 40px;
     }
@@ -1948,12 +2248,7 @@ h2 {
         z-index: 5;
     }
     
-    .hero__badge { 
-        align-self: flex-start;
-        margin: 0 0 15px 3px;
-    }
-    
-    .hero__title { 
+    .hero__title {
         text-align: left;
         font-size: clamp(1.3rem, 6.5vw, 2.1rem);
         line-height: 1.18;
@@ -1977,7 +2272,6 @@ h2 {
     }
 
 
-
     .program__steps-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1985,14 +2279,6 @@ h2 {
     .program__top {
         grid-template-columns: 1fr;
         gap: 28px;
-    }
-
-    .media-modal-prev {
-        left: 10px;
-    }
-
-    .media-modal-next {
-        right: 10px;
     }
 }
 
@@ -2053,8 +2339,6 @@ h2 {
         display: none;
     }
 
-    .philosophy__info,
-    .formula__info,
     .section-header-left,
     .section-header,
     .path__info,
@@ -2068,40 +2352,22 @@ h2 {
         width: 100%;
     }
 
-    .philosophy__info .btn,
-    .philosophy__info p,
-    .formula__desc,
     .path__info p,
     .contacts__info p {
         margin-left: auto;
         margin-right: auto;
     }
 
-    .philosophy__cards {
-        border: 0;
-        outline: 0;
-        margin-top: 24px;
-    }
-
-    .formula__grid,
     .path__cards,
     .contacts__form-container {
         margin-top: 24px;
     }
 
-    .phil-card,
-    .phil-card__img {
-        border: 0;
-        outline: 0;
-    }
-
-    .phil-card__content,
     .program-step__content-inner,
     .path-card > div:last-child {
         text-align: center;
     }
 
-    .phil-card__icon,
     .program-step__icon-box {
         justify-content: center;
     }
@@ -2110,8 +2376,6 @@ h2 {
         text-align: center;
     }
 
-    .philosophy__cards,
-    .formula__grid,
     .path__cards {
         grid-template-columns: 1fr;
     }
@@ -2135,11 +2399,9 @@ h2 {
     }
 
     .philosophy,
-    .formula,
     .program,
     .path-section,
     .athletes,
-    .media-contacts,
     .contacts,
     .footer {
         padding-top: 60px;
@@ -2254,8 +2516,6 @@ h2 {
         font-size: clamp(1.7rem, 8vw, 2.4rem);
     }
 
-    .philosophy__container,
-    .formula__container,
     .path__wrapper,
     .contacts__wrapper {
         gap: 28px;
@@ -2276,35 +2536,10 @@ h2 {
     .path__info h2 {
         white-space: normal;
     }
-
-    .media-modal-content {
-        width: calc(100% - 24px);
-    }
-
-    .media-modal__image {
-        height: 220px;
-    }
-
-    .media-modal__text {
-        padding: 24px 20px;
-    }
-
-    .media-modal-body h2 {
-        font-size: 1.3rem;
-    }
-
-    .media-modal-prev {
-        left: 6px;
-    }
-
-    .media-modal-next {
-        right: 6px;
-    }
 }
 
 @media (max-width: 480px) {
-    .athletes__grid,
-    .media__grid {
+    .athletes__grid {
         grid-template-columns: minmax(0, 1fr);
     }
 
@@ -2316,10 +2551,6 @@ h2 {
     .hero__buttons .btn {
         width: 100%;
         text-align: center;
-    }
-
-    .program__image-banner {
-        min-height: 280px;
     }
 
     .scroll-to-top {
@@ -2466,6 +2697,7 @@ h2 {
     }
 }
 
+
 /* === ПЛАНШЕТЫ (768px - 1024px) === */
 @media (min-width: 768px) and (max-width: 1024px) {
     .hero__layout {
@@ -2519,116 +2751,9 @@ h2 {
     }
 }
 
-/* === КАРУСЕЛИ НА МОБИЛЬНЫХ (Философия и Формула) === */
+/* === МОБИЛЬНЫЕ (768px): РУКОВОДСТВО И СОСТАВ КОМАНДЫ === */
 @media (max-width: 768px) {
-    /* Скрываем десктопные сетки на мобильных */
-    .philosophy__cards,
-    .formula__grid {
-        display: none;
-    }
-
-    /* Показываем карусели на мобильных */
-    .philosophy__carousel,
-    .formula__carousel {
-        display: block;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .philosophy__track,
-    .formula__track {
-        display: flex;
-        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        will-change: transform;
-    }
-
-    .philosophy__track .phil-card,
-    .formula__track .formula-col {
-        flex: 0 0 100%;
-        min-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        padding: 0 8px;
-    }
-
-    /* Стрелки карусели */
-    .philosophy__arrow,
-    .formula__arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 50%;
-        font-size: 1.5rem;
-        color: var(--text-main);
-        cursor: pointer;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .philosophy__arrow:hover,
-    .formula__arrow:hover {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #fff;
-    }
-
-    .philosophy__arrow--prev,
-    .formula__arrow--prev {
-        left: -20px;
-    }
-
-    .philosophy__arrow--next,
-    .formula__arrow--next {
-        right: -20px;
-    }
-
-    /* На узких экранах стрелки внутри */
-    @media (max-width: 480px) {
-        .philosophy__arrow--prev,
-        .formula__arrow--prev {
-            left: 8px;
-        }
-        .philosophy__arrow--next,
-        .formula__arrow--next {
-            right: 8px;
-        }
-    }
-
-    /* Индикаторы (точки) - опционально */
-    .philosophy__dots,
-    .formula__dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 16px;
-    }
-
-    .philosophy__dot,
-    .formula__dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--border-color);
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    .philosophy__dot.active,
-    .formula__dot.active {
-        background: var(--accent);
-        width: 24px;
-        border-radius: 4px;
-    }
-
-    /* Management Section Mobile */
+/* Management Section Mobile */
     .management {
         padding: 60px 0;
     }
@@ -2687,20 +2812,8 @@ h2 {
     }
 }
 
-/* На десктопе карусели скрыты, показываем обычную сетку */
+/* Athletes Section Desktop - 4 columns grid */
 @media (min-width: 769px) {
-    .philosophy__carousel,
-    .formula__carousel {
-        display: none;
-    }
-    .philosophy__cards {
-        display: grid;
-    }
-    .formula__grid {
-        display: grid;
-    }
-
-    /* Athletes Section Desktop - 4 columns grid */
     .athletes__grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -2712,3 +2825,373 @@ h2 {
         scroll-snap-align: none;
     }
 }
+
+/* ==========================================================================
+   HERO: ПОДНЯТЫЙ ЗАГОЛОВОК + ПУЛЬСИРУЮЩИЙ СТИКЕР «ГОНКА ОТ 250 Т.Р.»
+   ========================================================================== */
+
+/* Заголовок чуть выше — на месте удалённой надписи Dozari team */
+.hero__title--raised {
+    margin-top: -20px;
+}
+
+/* Пульсирующий стикер справа */
+.hero__sticker {
+    position: absolute;
+    top: 120px;
+    right: 3vw;
+    z-index: 6;
+    padding: 12px 22px;
+    background: var(--accent);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transform: skewX(-10deg);
+    box-shadow: 0 8px 24px var(--accent-glow);
+    animation: stickerPulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.hero__sticker span {
+    display: inline-block;
+    transform: skewX(10deg);
+}
+
+@keyframes stickerPulse {
+    0%, 100% { transform: skewX(-10deg) scale(1); }
+    50%      { transform: skewX(-10deg) scale(1.07); }
+}
+
+/* Телефон: опускаем пилота, чтобы рукой он указывал на кнопку «Стать пилотом» */
+@media (max-width: 767px) {
+    .hero__center {
+        bottom: -140px;
+    }
+
+    .hero__sticker {
+        top: auto;
+        bottom: 190px;
+        right: 16px;
+        padding: 8px 14px;
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+
+    /* ==========================================================================
+    POLICY PAGE (отдельная страница документа) — общий стиль сайта
+       ========================================================================== */
+    .legal {
+        position: relative;
+        padding: 148px 0 110px;
+        background-color: var(--bg-secondary);
+        overflow: hidden;
+    }
+
+    .legal__inner {
+        position: relative;
+        z-index: 1;
+        max-width: 880px;
+    }
+
+    .legal__back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        margin-bottom: 26px;
+    }
+
+    .legal__back:hover,
+    .legal__back:focus-visible {
+        color: var(--accent);
+    }
+
+    .legal__title {
+        font-size: clamp(1.6rem, 4vw, 2.7rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        line-height: 1.12;
+        color: var(--text-main);
+        margin: 18px 0 22px;
+        overflow-wrap: anywhere;
+    }
+
+    .legal__meta {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-bottom: 34px;
+    }
+
+    /* --- Тело документа --- */
+    .legal__body {
+        border-top: 2px solid var(--accent);
+        padding-top: 34px;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--text-muted);
+        white-space: normal;
+        overflow-wrap: break-word;
+    }
+
+    .legal__body p {
+        color: var(--text-muted);
+        font-size: inherit;
+        line-height: 1.7;
+        margin: 0 0 12px;
+    }
+
+    .legal__body p:last-child {
+        margin-bottom: 0;
+    }
+
+    .legal__content p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Уплотняем отступ между вводной фразой пункта и его списком */
+    .legal__content p + .legal__list {
+        margin-top: 6px;
+    }
+
+    .legal__body strong {
+        color: var(--text-main);
+        font-weight: 700;
+    }
+
+    .legal__body a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+    .legal__body a:hover,
+    .legal__body a:focus-visible {
+        color: var(--accent-hover);
+    }
+
+    /* Название документа (вводная строка) */
+    .legal__doc-title {
+        font-size: clamp(1.05rem, 0.3vw + 1rem, 1.2rem);
+        font-weight: 700;
+        line-height: 1.45;
+        color: var(--text-main);
+        margin: 0 0 26px;
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+    }
+
+    /* Блоки-разделы */
+    .legal__section {
+        margin: 0;
+    }
+
+    .legal__section + .legal__section {
+        margin-top: 36px;
+        padding-top: 36px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* Заголовки разделов */
+    .legal__heading {
+        font-size: clamp(1.08rem, 0.35vw + 1rem, 1.35rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        line-height: 1.3;
+        color: var(--text-main);
+        margin: 0 0 18px;
+        padding-left: 16px;
+        border-left: 4px solid var(--accent);
+        overflow-wrap: anywhere;
+    }
+
+    /* Списки пунктов */
+    .legal__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .legal__list .legal__list {
+        margin-top: 12px;
+    }
+
+    .legal__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin: 0 0 12px;
+    }
+
+    .legal__item:last-child {
+        margin-bottom: 0;
+    }
+
+    .legal__num {
+        flex: 0 0 3.2em;
+        color: var(--accent);
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        line-height: inherit;
+    }
+
+    .legal__content {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    /* Списки с маркером-тире */
+    .legal__list--dash {
+        margin-top: 12px;
+    }
+
+    .legal__list--dash > .legal__item {
+        display: block;
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 8px;
+    }
+
+    .legal__list--dash > .legal__item:last-child {
+        margin-bottom: 0;
+    }
+
+    .legal__list--dash > .legal__item::before {
+        content: "–";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    /* Примечание */
+    .legal__note {
+        margin-top: 40px;
+        padding: 20px 24px;
+        background: linear-gradient(90deg, rgba(20, 168, 0, 0.12), rgba(20, 168, 0, 0.02) 60%);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 14px 14px 0;
+    }
+
+    .legal__note p {
+        margin: 0;
+        color: var(--text-muted);
+    }
+
+    /* === НОУТБУКИ (до 1365px) === */
+    @media (max-width: 1365px) {
+        .legal {
+            padding: 138px 0 100px;
+        }
+    }
+
+    /* === ПЛАНШЕТЫ И НОУТБУКИ (до 1024px) === */
+    @media (max-width: 1024px) {
+        .legal {
+            padding: 126px 0 92px;
+        }
+
+        .legal__inner {
+            max-width: 100%;
+        }
+    }
+
+    /* === ПЛАНШЕТЫ ВЕРТИКАЛЬНЫЕ / БОЛЬШИЕ ТЕЛЕФОНЫ (до 768px) === */
+    @media (max-width: 768px) {
+        .legal {
+            padding: 108px 0 72px;
+        }
+
+        .legal__body {
+            padding-top: 26px;
+            font-size: 0.96rem;
+        }
+
+        .legal__section + .legal__section {
+            margin-top: 28px;
+            padding-top: 28px;
+        }
+
+        .legal__heading {
+            margin-bottom: 14px;
+        }
+
+        .legal__item {
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .legal__num {
+            flex-basis: 2.8em;
+        }
+    }
+
+    /* === ТЕЛЕФОНЫ (до 480px) === */
+    @media (max-width: 480px) {
+        .legal {
+            padding: 96px 0 60px;
+        }
+
+        .legal__back {
+            margin-bottom: 20px;
+        }
+
+        .legal__title {
+            margin: 14px 0 18px;
+        }
+
+        .legal__body {
+            padding-top: 22px;
+            font-size: 0.94rem;
+            line-height: 1.65;
+        }
+
+        .legal__doc-title {
+            padding-left: 12px;
+            margin-bottom: 22px;
+        }
+
+        .legal__section + .legal__section {
+            margin-top: 24px;
+            padding-top: 24px;
+        }
+
+        .legal__heading {
+            padding-left: 14px;
+            border-left-width: 3px;
+            font-size: 1.02rem;
+            margin-bottom: 12px;
+        }
+
+        .legal__item {
+            gap: 8px;
+        }
+
+        .legal__num {
+            flex-basis: 2.6em;
+        }
+
+        .legal__list--dash > .legal__item {
+            padding-left: 16px;
+        }
+    }
+
+    /* === БОЛЬШИЕ ЭКРАНЫ (от 1366px) === */
+    @media (min-width: 1366px) {
+        .legal__inner {
+            max-width: 900px;
+        }
+    }

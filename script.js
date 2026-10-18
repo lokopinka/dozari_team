@@ -148,121 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Dynamic Media Cards & News Popup Modal
-    const mediaGrid = document.getElementById('mediaGrid');
-    const mediaModal = document.getElementById('mediaModal');
-    const closeMediaModal = document.getElementById('closeMediaModal');
-    const mediaModalBody = document.getElementById('mediaModalBody');
-    const prevMediaBtn = document.getElementById('prevMediaBtn');
-    const nextMediaBtn = document.getElementById('nextMediaBtn');
 
-    let currentNewsList = [];
-    let currentNewsIndex = 0;
-
-    const fallbackNews = [
-        {
-            title: 'ПОБЕДА НА ЭТАПЕ ROK CUP',
-            date: '02 СЕНТЯБРЯ 2026',
-            text: 'Пилот команды Матвей Дозаров завоевал золото в упорной борьбе на мокрой трассе. Соревнования проходили в сложных погодных условиях, однако слаженная работа личного механика и инженеров позволила настроить карт идеально. Победа на данном этапе открывает отличные перспективы перед финалом сезона.',
-            photo: 'images/slide1.jpg',
-            link: '#'
-        },
-        {
-            title: 'ТЕСТОВЫЕ ЗАЕЗДЫ НОВОГО ШАССИ',
-            date: '28 АВГУСТА 2026',
-            text: 'Инженеры команды провели успешные тесты обновленной геометрии рамы и тормозной системы. Новые компоненты продемонстрировали отличную стабильность на высоких скоростях и улучшенный отклик в поворотах. Пилоты отметили возросший уровень комфорта и предсказуемость поведения гоночного болида.',
-            photo: 'images/slide2.jpg',
-            link: '#'
-        },
-        {
-            title: 'ОТКРЫТ НАБОР В АКАДЕМИЮ',
-            date: '15 АВГУСТА 2026',
-            text: 'Стартует отбор молодых пилотов в молодежную программу DOZARI KARTING Academy. Мы приглашаем талантливых ребят проявить себя в тренировочных заездах под руководством профессиональных тренеров и действующих чемпионов. Лучшие выпускники академии получат шанс войти в основной состав команды.',
-            photo: 'images/slide3.jpg',
-            link: '#'
-        }
-    ];
-
-    function openMediaModal(index) {
-        currentNewsIndex = index;
-        const item = currentNewsList[currentNewsIndex];
-        if (!item || !mediaModalBody) return;
-        mediaModalBody.innerHTML = `
-            <img class="media-modal__image" src="${item.photo}" alt="${item.title}">
-            <div class="media-modal__text">
-                <span class="modal-news-date">${item.date}</span>
-                <h2>${item.title}</h2>
-                <p>${item.text}</p>
-            </div>
-        `;
-
-        mediaModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeMediaModalFn() {
-        if (mediaModal) {
-            mediaModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    if (closeMediaModal) {
-        closeMediaModal.addEventListener('click', closeMediaModalFn);
-    }
-
-    if (mediaModal) {
-        mediaModal.addEventListener('click', (e) => {
-            if (e.target === mediaModal) {
-                closeMediaModalFn();
-            }
-        });
-    }
-
-    if (prevMediaBtn) {
-        prevMediaBtn.addEventListener('click', () => {
-            currentNewsIndex = (currentNewsIndex - 1 + currentNewsList.length) % currentNewsList.length;
-            openMediaModal(currentNewsIndex);
-        });
-    }
-
-    if (nextMediaBtn) {
-        nextMediaBtn.addEventListener('click', () => {
-            currentNewsIndex = (currentNewsIndex + 1) % currentNewsList.length;
-            openMediaModal(currentNewsIndex);
-        });
-    }
-
-    function renderMedia(items) {
-        if (!mediaGrid) return;
-        currentNewsList = items;
-        mediaGrid.innerHTML = '';
-        items.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.className = 'media-card';
-            card.innerHTML = `
-                <div class="media-card__img">
-                    <img src="${item.photo}" alt="${item.title}" loading="lazy">
-                </div>
-                <div class="media-card__content">
-                    <span class="media-card__date">${item.date}</span>
-                    <h3 class="media-card__title">${item.title}</h3>
-                    <p class="media-card__text">${item.text}</p>
-                    <a href="#" class="media-card__link" data-index="${index}"><span>Читать подробнее →</span></a>
-                </div>
-            `;
-            const linkBtn = card.querySelector('.media-card__link');
-            linkBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                openMediaModal(index);
-            });
-            mediaGrid.appendChild(card);
-        });
-    }
-
-    renderMedia(fallbackNews);
-
-    // 7. Phone Mask & Validation (+7 (XXX) XXX-XX-XX)
+    // 6. Phone Mask & Validation (+7 (XXX) XXX-XX-XX)
     const phoneInput = document.getElementById('userPhone');
 
     if (phoneInput) {
@@ -297,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 8. AJAX Form Submission to mail.php
+    // 7. AJAX Form Submission to mail.php
     const applicationForm = document.getElementById('applicationForm');
     const formMessage = document.getElementById('formMessage');
 
@@ -349,172 +236,169 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. Mobile Carousels for Philosophy & Formula
-    function initCarousel(carouselId, trackSelector, prevSelector, nextSelector, dotsSelector = null, autoPlay = true, autoPlayDelay = 4000) {
-        const carousel = document.getElementById(carouselId);
-        if (!carousel) return;
+    // Фиксируем размер пилота и hero-сетки после загрузки,
+    // чтобы iOS Safari не сжимал картинку при скрытии адресной строки
+    const heroLayout = document.querySelector('.hero__layout');
+    const heroCenter = document.querySelector('.hero__center');
+    const heroButton = document.querySelector('.hero-btn-giant');
+    const heroTitle = document.querySelector('.hero__title');
+    const MOBILE_HERO_MAX = 1024;
+    // Кончик пальца поднятой руки в pilot-cutout.png (доли ширины/высоты изображения)
+    const PILOT_HAND_Y = 0.038;
+    const PILOT_IMAGE_ASPECT = 5335 / 3557;
+    let heroSizeFrozen = false;
+    let heroMode = null;
+    let heroLockedWidth = 0;
+    let heroResizeTimer = null;
 
-        const track = carousel.querySelector(trackSelector);
-        const prevBtn = carousel.querySelector(prevSelector);
-        const nextBtn = carousel.querySelector(nextSelector);
-        const dotsContainer = dotsSelector ? carousel.querySelector(dotsSelector) : null;
-        const slides = track ? track.children : [];
-        const slideCount = slides.length;
+    if (heroLayout && heroCenter) {
+        const getHeroMode = () => (window.innerWidth <= MOBILE_HERO_MAX ? 'mobile' : 'desktop');
 
-        if (slideCount <= 1) {
-            if (prevBtn) prevBtn.style.display = 'none';
-            if (nextBtn) nextBtn.style.display = 'none';
-            return;
-        }
-
-        let currentIndex = 0;
-        let autoPlayTimer = null;
-        let isUserInteracting = false;
-
-        // Create dots if container exists
-        if (dotsContainer) {
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < slideCount; i++) {
-                const dot = document.createElement('button');
-                dot.className = i === 0 ? 'philosophy__dot active' : 'philosophy__dot';
-                dot.setAttribute('aria-label', `Слайд ${i + 1}`);
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsContainer.appendChild(dot);
+        // Ставим кончик пальца чуть ниже кнопки «Стать пилотом»,
+        // чтобы пилот указывал на неё и не перекрывал её
+        const alignPilotHandToButton = () => {
+            if (!heroButton || getHeroMode() === 'desktop') {
+                heroCenter.style.bottom = '';
+                return;
             }
-        }
 
-        function updateCarousel() {
-            if (!track) return;
-            const offset = -currentIndex * 100;
-            track.style.transform = `translateX(${offset}%)`;
+            const img = heroCenter.querySelector('img');
+            if (!img) return;
 
-            // Update dots
-            if (dotsContainer) {
-                const dots = dotsContainer.querySelectorAll('.philosophy__dot, .formula__dot');
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentIndex);
-                });
+            const imgStyle = getComputedStyle(img);
+            const matrix = imgStyle.transform.match(/matrix\(([^)]+)\)/);
+            const scale = matrix ? parseFloat(matrix[1].split(',')[0]) : 1;
+            const originY = parseFloat(imgStyle.transformOrigin.split(' ')[1]) || img.clientHeight;
+
+            const naturalWidth = img.naturalWidth || 5335;
+            const naturalHeight = img.naturalHeight || 3557;
+            const aspect = naturalWidth && naturalHeight
+                ? naturalWidth / naturalHeight
+                : PILOT_IMAGE_ASPECT;
+            const contentWidth = Math.min(img.clientWidth, img.clientHeight * aspect);
+            const contentHeight = contentWidth / aspect;
+
+            // Позиция кончика пальца внутри самого изображения (до scale)
+            const handLocalY = (img.clientHeight - contentHeight) + PILOT_HAND_Y * contentHeight;
+
+            const layoutRect = heroLayout.getBoundingClientRect();
+            const bottomPx = parseFloat(getComputedStyle(heroCenter).bottom);
+            if (!Number.isFinite(bottomPx)) return;
+
+            // Низ контейнера пилота отсчитывается от низа hero-сетки
+            const containerTop = layoutRect.bottom - bottomPx - heroCenter.clientHeight;
+            const handY = containerTop + img.offsetTop + originY + (handLocalY - originY) * scale;
+
+            const buttonRect = heroButton.getBoundingClientRect();
+            const baseGap = window.innerWidth >= 768 ? 24 : 18;
+            // На низких экранах (ландшафт телефона) не выпускаем руку за пределы экрана
+            const gap = Math.max(0, Math.min(baseGap, window.innerHeight - buttonRect.bottom - 4));
+            const delta = (buttonRect.bottom + gap) - handY;
+
+            if (Math.abs(delta) < 0.5) return;
+            heroCenter.style.bottom = (bottomPx - delta).toFixed(1) + 'px';
+        };
+
+        const lockHeroSize = () => {
+            const mode = getHeroMode();
+            heroMode = mode;
+            heroLockedWidth = window.innerWidth;
+
+            if (mode === 'desktop') {
+                heroCenter.style.width = '';
+                heroCenter.style.height = '';
+                heroCenter.style.bottom = '';
+                heroLayout.style.height = 'calc(100vh - 80px)';
+                heroLayout.style.minHeight = '';
+                if (heroTitle) heroTitle.style.marginBottom = '';
+                return true;
             }
-        }
 
-        function goToSlide(index) {
-            currentIndex = (index + slideCount) % slideCount;
-            updateCarousel();
-        }
+            // Сбрасываем прошлые ограничения, чтобы замерить актуальный размер экрана
+            heroCenter.style.width = '';
+            heroCenter.style.height = '';
+            heroLayout.style.height = '';
+            heroLayout.style.minHeight = '';
+            if (heroTitle) heroTitle.style.marginBottom = '';
 
-        function nextSlide() {
-            goToSlide(currentIndex + 1);
-        }
+            // Читаем размеры после применения CSS (без vh в inline-стилях)
+            const pilotRect = heroCenter.getBoundingClientRect();
+            const layoutRect = heroLayout.getBoundingClientRect();
+            if (!pilotRect.width || !pilotRect.height || !layoutRect.height) return false;
 
-        function prevSlide() {
-            goToSlide(currentIndex - 1);
-        }
+            // Фиксируем пилота в пикселях: размер больше не зависит от vh,
+            // поэтому адресная строка Safari не может его сжать
+            heroCenter.style.width = Math.round(pilotRect.width) + 'px';
+            heroCenter.style.height = Math.round(pilotRect.height) + 'px';
 
-        function startAutoPlay() {
-            if (!autoPlay) return;
-            stopAutoPlay();
-            autoPlayTimer = setInterval(() => {
-                if (!isUserInteracting) {
-                    nextSlide();
-                }
-            }, autoPlayDelay);
-        }
+            // Фиксируем высоту hero-сетки, чтобы пилот не смещался при скролле
+            heroLayout.style.height = Math.round(layoutRect.height) + 'px';
+            heroLayout.style.minHeight = '0px';
 
-        function stopAutoPlay() {
-            if (autoPlayTimer) {
-                clearInterval(autoPlayTimer);
-                autoPlayTimer = null;
-            }
-        }
-
-        // Event listeners
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                isUserInteracting = true;
-                prevSlide();
-                stopAutoPlay();
-                setTimeout(() => { isUserInteracting = false; startAutoPlay(); }, 1000);
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                isUserInteracting = true;
-                nextSlide();
-                stopAutoPlay();
-                setTimeout(() => { isUserInteracting = false; startAutoPlay(); }, 1000);
-            });
-        }
-
-        // Pause on hover
-        carousel.addEventListener('mouseenter', stopAutoPlay);
-        carousel.addEventListener('mouseleave', startAutoPlay);
-
-        // Touch swipe support
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        carousel.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            stopAutoPlay();
-        }, { passive: true });
-
-        carousel.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
-                isUserInteracting = true;
-                if (diff > 0) nextSlide(); else prevSlide();
-                setTimeout(() => { isUserInteracting = false; startAutoPlay(); }, 1000);
-            } else {
-                startAutoPlay();
-            }
-        }, { passive: true });
-
-        // Resize handler - reinitialize on breakpoint change
-        let wasMobile = window.innerWidth <= 768;
-        window.addEventListener('resize', () => {
-            const isMobile = window.innerWidth <= 768;
-            if (wasMobile !== isMobile) {
-                wasMobile = isMobile;
-                if (isMobile) {
-                    startAutoPlay();
-                } else {
-                    stopAutoPlay();
+            // Фиксируем отступ заголовка (он зависел от vh), чтобы кнопка не сдвигалась
+            if (heroTitle) {
+                const titleMarginBottom = parseFloat(getComputedStyle(heroTitle).marginBottom);
+                if (Number.isFinite(titleMarginBottom)) {
+                    heroTitle.style.marginBottom = titleMarginBottom + 'px';
                 }
             }
+
+            alignPilotHandToButton();
+            return true;
+        };
+
+        const freezeHeroSize = () => {
+            heroSizeFrozen = lockHeroSize();
+        };
+
+        // Замеряем экран на каждом этапе загрузки страницы
+        lockHeroSize();
+        requestAnimationFrame(() => {
+            if (heroSizeFrozen) return;
+            lockHeroSize();
+            requestAnimationFrame(() => {
+                if (!heroSizeFrozen) lockHeroSize();
+            });
         });
 
-        // Start autoplay if mobile
-        if (window.innerWidth <= 768) {
-            startAutoPlay();
-        }
-    }
+        window.addEventListener('load', freezeHeroSize, { once: true });
 
-    // Initialize carousels
-    initCarousel('philosophyCarousel', '.philosophy__track', '.philosophy__arrow--prev', '.philosophy__arrow--next', '.philosophy__dots');
-    initCarousel('formulaCarousel', '.formula__track', '.formula__arrow--prev', '.formula__arrow--next', '.formula__dots');
+        // При возврате со страницы из bfcache размер нужно зафиксировать заново
+        window.addEventListener('pageshow', (event) => {
+            if (!event.persisted) return;
+            heroSizeFrozen = false;
+            freezeHeroSize();
+        });
 
-    // Add dots containers to carousels if they don't exist
-    function ensureDotsContainer(carouselId, dotsClass) {
-        const carousel = document.getElementById(carouselId);
-        if (carousel && !carousel.querySelector(`.${dotsClass}`)) {
-            const dotsContainer = document.createElement('div');
-            dotsContainer.className = dotsClass;
-            carousel.appendChild(dotsContainer);
-        }
-    }
+        // После загрузки на мобильных игнорируем resize от адресной строки.
+        // На десктопе оставляем прежнее поведение — пересчёт при изменении окна.
+        const onHeroResize = () => {
+            const mode = getHeroMode();
 
-    ensureDotsContainer('philosophyCarousel', 'philosophy__dots');
-    ensureDotsContainer('formulaCarousel', 'formula__dots');
-    // Fix iOS hero height (prevent pilot compression on scroll)
-    const heroLayout = document.querySelector('.hero__layout');
-    if (heroLayout) {
-        const headerHeight = 80; // px, высота шапки
-        function setHeroHeight() {
-            heroLayout.style.height = 'calc(100vh - ' + headerHeight + 'px)';
+            // После загрузки игнорируем изменения только высоты (адресная строка iOS).
+            // При реальном изменении ширины (поворот) размер пересчитываем.
+            if (heroSizeFrozen && mode === 'mobile' && heroMode === 'mobile') {
+                if (Math.abs(window.innerWidth - heroLockedWidth) < 2) return;
+                heroSizeFrozen = false;
+            }
+            if (mode !== heroMode) heroSizeFrozen = false;
+
+            clearTimeout(heroResizeTimer);
+            heroResizeTimer = setTimeout(() => {
+                if (heroSizeFrozen && getHeroMode() === 'mobile') return;
+                lockHeroSize();
+            }, 140);
+        };
+
+        window.addEventListener('resize', onHeroResize, { passive: true });
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', onHeroResize, { passive: true });
         }
-        setHeroHeight();
-        window.addEventListener('resize', setHeroHeight);
+
+        // При повороте экрана ширина реально меняется — пересчитываем размеры
+        window.addEventListener('orientationchange', () => {
+            heroSizeFrozen = false;
+            setTimeout(freezeHeroSize, 350);
+        });
     }
 });
