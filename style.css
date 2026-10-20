@@ -383,6 +383,7 @@ h2 {
 .hero {
     position: relative;
     min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -457,25 +458,27 @@ h2 {
     position: relative;
     z-index: 4;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
     box-sizing: border-box;
-    height: 100%;
-    min-height: 100vh;
-    padding-top: 80px;
-    padding-left: clamp(80px, 10vw, 180px); /* Увеличен левый отступ для текста */
-    padding-right: 30px;
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    padding: 80px 0 0;
 }
 
 .hero__left {
-    width: min(100%, 680px);
-    max-width: 680px;
+    align-self: center;
+    width: clamp(360px, 38vw, 520px);
+    max-width: 520px;
     min-width: 0;
-    flex: 0 1 680px;
+    flex: 0 1 clamp(360px, 38vw, 520px);
     position: relative;
     z-index: 5;
-    padding-left: 0;
+    padding-left: clamp(24px, 5vw, 90px);
+    padding-right: 0;
 }
 
 /* Обводка (тень) текста — делаем аккуратнее, убираем «грязь» */
@@ -491,14 +494,15 @@ h2 {
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    font-size: clamp(2.1rem, 2.9vw, 3.25rem);
+    font-size: clamp(1.7rem, 2.15vw, 2.05rem);
     font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 20px;
+    line-height: 1.14;
+    margin-bottom: 22px;
     text-transform: uppercase;
     color: #ffffff;
     text-wrap: balance;
     overflow-wrap: normal;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
 }
 .hero__subtitle {
     font-size: clamp(0.95rem, 1.1vw, 1.15rem);
@@ -511,19 +515,19 @@ h2 {
 .hero__buttons {
     display: flex;
     width: 100%;
-    max-width: 480px; /* Кнопка займет ровно то место, где раньше были две кнопки */
+    max-width: 300px;
 }
 
 .hero-btn-giant {
     width: 100%;
-    padding: 16px 30px; /* Адекватная высота кнопки */
+    padding: 12px 22px;
 }
 
 .hero-btn-giant span {
-    font-size: 1.1rem; /* Читаемый, аккуратный шрифт (чуть больше стандартного) */
+    font-size: 0.92rem;
     font-weight: 900;
     color: #ffffff;
-    white-space: nowrap; /* СТРОГО В ОДНУ ЛИНИЮ: запрещаем тексту переноситься */
+    white-space: nowrap;
 }
 
 
@@ -823,10 +827,35 @@ h2 {
 }
 
 .phil-wreaths__group {
+    --medal: var(--text-muted);
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px 16px;
+    gap: 12px 18px;
+}
+
+.phil-wreaths__group--gold {
+    --medal: #f5c451;
+}
+
+.phil-wreaths__group--silver {
+    --medal: #d3dae5;
+}
+
+.phil-wreaths__group--bronze {
+    --medal: #cf8244;
+}
+
+[data-theme="light"] .phil-wreaths__group--gold {
+    --medal: #dda71d;
+}
+
+[data-theme="light"] .phil-wreaths__group--silver {
+    --medal: #94a2b5;
+}
+
+[data-theme="light"] .phil-wreaths__group--bronze {
+    --medal: #b86a26;
 }
 
 .phil-wreaths__label {
@@ -893,7 +922,7 @@ h2 {
     display: flex;
     align-items: flex-end;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 16px;
     min-width: 0;
 }
 
@@ -901,13 +930,13 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
 }
 
 .phil-wreath {
     display: block;
-    width: 42px;
-    height: 42px;
+    width: 64px;
+    height: 64px;
     object-fit: contain;
     transition: transform 0.25s ease;
 }
@@ -918,10 +947,10 @@ h2 {
 
 .phil-wreath__year {
     font-family: var(--font-main);
-    font-size: 0.66rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 800;
     letter-spacing: 0.06em;
-    color: var(--text-muted);
+    color: var(--medal);
     white-space: nowrap;
 }
 
@@ -1162,12 +1191,12 @@ h2 {
     }
 
     .phil-wreath {
-        width: 38px;
-        height: 38px;
+        width: 54px;
+        height: 54px;
     }
 
     .phil-wreath__year {
-        font-size: 0.62rem;
+        font-size: 0.9rem;
     }
 
     .phil-awards {
@@ -2649,107 +2678,9 @@ h2 {
     }
 }
 
-/* === ПИЛОТ: БАЗОВЫЕ НАСТРОЙКИ === */
-.hero__center {
-    position: absolute;
-    bottom: -70px;
-    z-index: 3;
-    pointer-events: none;
-    animation: pilotEnter 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    opacity: 0;
-    transform: translate(-150px, -80px);
-    will-change: transform, opacity;
-}
-.hero__center img {
-    width: 85%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
-    will-change: transform;
-}
-
-@keyframes pilotEnter {
-    0% {
-        opacity: 0;
-        transform: translate(-150px, -80px);
-    }
-    60% {
-        opacity: 1;
-        transform: translate(10px, 5px);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-}
-
-/* === ТЕЛЕФОНЫ (До 767px) === */
-@media (max-width: 767px) {
-    .hero__center {
-        left: 0;
-        width: 100%;
-        height: 95vh; /* Почти весь экран — кулак до кнопки */
-    }
-    .hero__center img {
-        object-position: bottom center;
-        transform: scale(2.3); /* Крупный план: кулак достаёт до кнопки */
-        transform-origin: bottom center;
-    }
-}
-
-
-/* === ПЛАНШЕТЫ (768px - 1024px) === */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .hero__layout {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        min-height: 100vh;
-        padding-top: 110px;
-    }
-    .hero__center {
-        left: 0;
-        width: 100%;
-        height: 85vh; /* Кулак до кнопки */
-    }
-    .hero__center img {
-        object-position: bottom center;
-        transform: scale(1.3);
-        transform-origin: bottom center;
-    }
-}
-
-/* === НОУТБУКИ (1025px - 1365px) === */
-@media (min-width: 1025px) and (max-width: 1365px) {
-    .hero__center {
-        right: -3vw;
-        left: auto;
-        width: 62vw;
-        height: calc(100vh - 85px);
-        bottom: -50px;
-    }
-    .hero__center img {
-        object-position: bottom right;
-        transform: scale(1.35);
-        transform-origin: bottom right;
-    }
-}
-
-/* === ПК (От 1366px) === */
-@media (min-width: 1366px) {
-    .hero__center {
-        right: -13vw; /* Сильно правее — сдвиг вправо */
-        left: auto;
-        width: 60vw; /* Размер как был */
-        height: calc(100vh - 80px);
-        bottom: -60px;
-    }
-    .hero__center img {
-        object-position: bottom right;
-        transform: scale(1.45); /* Масштаб как был */
-        transform-origin: bottom right;
-    }
-}
+/* === ПИЛОТ ===
+   Стили пилота вынесены в конец файла: статичная картинка,
+   полностью помещается в hero-блок без обрезания. */
 
 /* === МОБИЛЬНЫЕ (768px): РУКОВОДСТВО И СОСТАВ КОМАНДЫ === */
 @media (max-width: 768px) {
@@ -2826,6 +2757,22 @@ h2 {
     }
 }
 
+/* ПК: 9 пилотов — два ряда: 4 крупные карточки сверху и 5 снизу,
+   оба ряда занимают всю ширину контейнера */
+@media (min-width: 1025px) {
+    .athletes__grid {
+        grid-template-columns: repeat(20, minmax(0, 1fr));
+    }
+
+    .athlete-card:nth-child(-n + 4) {
+        grid-column: span 5;
+    }
+
+    .athlete-card:nth-child(n + 5) {
+        grid-column: span 4;
+    }
+}
+
 /* ==========================================================================
    HERO: ПОДНЯТЫЙ ЗАГОЛОВОК + ПУЛЬСИРУЮЩИЙ СТИКЕР «ГОНКА ОТ 250 Т.Р.»
    ========================================================================== */
@@ -2866,12 +2813,8 @@ h2 {
     50%      { transform: skewX(-10deg) scale(1.07); }
 }
 
-/* Телефон: опускаем пилота, чтобы рукой он указывал на кнопку «Стать пилотом» */
+/* Телефон: стикер акции */
 @media (max-width: 767px) {
-    .hero__center {
-        bottom: -140px;
-    }
-
     .hero__sticker {
         top: auto;
         bottom: 190px;
@@ -3195,3 +3138,188 @@ h2 {
             max-width: 900px;
         }
     }
+
+/* ==========================================================================
+   HERO: СТАТИЧНЫЙ ПИЛОТ, ПОЛНОСТЬЮ ПОМЕЩАЕТСЯ В БЛОК
+   ========================================================================== */
+
+/* --- Текст и кнопка: компактнее, чтобы освободить место пилоту --- */
+.hero {
+    padding-top: 0;
+}
+
+.hero__layout {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: clamp(12px, 2vw, 40px);
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    padding: 80px 0 0;
+}
+
+.hero__left {
+    align-self: center;
+    flex: 0 1 clamp(400px, 40vw, 600px);
+    width: clamp(400px, 40vw, 600px);
+    max-width: 600px;
+    min-width: 0;
+    padding-left: clamp(24px, 5vw, 90px);
+    padding-right: 0;
+}
+
+.hero__title {
+    font-size: clamp(1.85rem, 2.5vw, 2.8rem);
+    line-height: 1.12;
+    margin-bottom: 26px;
+}
+
+.hero__buttons {
+    max-width: 340px;
+}
+
+.hero-btn-giant {
+    width: 100%;
+    padding: 15px 28px;
+}
+
+.hero-btn-giant span {
+    font-size: 1rem;
+}
+
+/* --- Пилот: статичная картинка без анимации въезда и обрезания --- */
+.hero__center {
+    position: relative;
+    inset: auto;
+    z-index: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex: 1 1 0;
+    align-self: stretch;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    padding: 0 clamp(10px, 1.5vw, 28px) clamp(6px, 1.2vh, 12px) 0;
+    pointer-events: none;
+    opacity: 1;
+    transform: none;
+    animation: none;
+    will-change: auto;
+}
+
+.hero__center img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: right bottom;
+    transform: none;
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
+    will-change: auto;
+}
+
+/* --- Ноутбуки: шапка 70px, раскладка остаётся горизонтальной --- */
+@media (max-width: 1365px) {
+    .hero {
+        padding-top: 0;
+    }
+
+    .hero__layout {
+        height: 100svh;
+        min-height: 0;
+        padding-top: 70px;
+    }
+}
+
+/* --- Планшеты и телефоны: текст сверху, пилот занимает всё оставшееся место --- */
+@media (max-width: 1024px) {
+    /* Первый блок всегда на всю высоту экрана */
+    .hero {
+        min-height: 100vh;
+        min-height: 100svh;
+        padding-top: 0;
+    }
+
+    .hero__layout {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: clamp(6px, 1.2vh, 14px);
+        height: 100svh;
+        min-height: 0;
+        /* По бокам без отступов: пилот может выходить за края,
+           вертикальное обрезание при этом исключено */
+        padding: calc(70px + clamp(8px, 1.6vh, 18px)) 0 0;
+    }
+
+    .hero__left {
+        align-self: center;
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 680px;
+        min-height: 0;
+        margin: 0 auto;
+        padding: 0 clamp(16px, 4vw, 32px);
+    }
+
+    .hero__title {
+        font-size: clamp(1.35rem, 4.6vw, 1.9rem);
+        line-height: 1.18;
+        margin-bottom: clamp(14px, 2vh, 20px);
+        text-shadow: 0 3px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    .hero__buttons {
+        max-width: min(100%, 300px);
+    }
+
+    .hero-btn-giant {
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    .hero-btn-giant span {
+        font-size: clamp(0.86rem, 3.4vw, 0.96rem);
+    }
+
+    /* Пилот тянется на всю оставшуюся высоту (кулак — у кнопки, карт — внизу) */
+    .hero__center {
+        flex: 1 1 auto;
+        align-self: stretch;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0 0 clamp(4px, 1vh, 10px);
+        overflow: hidden;
+    }
+
+    .hero__center img {
+        flex: 0 0 auto;
+        width: auto;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        object-fit: contain;
+        object-position: center bottom;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero__title {
+        font-size: clamp(1.3rem, 5.4vw, 1.6rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__center,
+    .hero__center img {
+        animation: none;
+        transition: none;
+    }
+}
