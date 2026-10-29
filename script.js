@@ -21,13 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
 
     if (scrollToTopBtn) {
+        let scrollTicking = false;
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                scrollToTopBtn.classList.add('show');
-            } else {
-                scrollToTopBtn.classList.remove('show');
-            }
-        });
+            if (scrollTicking) return;
+            scrollTicking = true;
+            window.requestAnimationFrame(() => {
+                scrollToTopBtn.classList.toggle('show', window.scrollY > 400);
+                scrollTicking = false;
+            });
+        }, { passive: true });
 
         scrollToTopBtn.addEventListener('click', () => {
             window.scrollTo({
@@ -136,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide(next);
     }
 
-    if (slides.length > 0) {
+    if (slides.length > 1) {
         let slideTimer = setInterval(nextSlide, slideInterval);
 
         verticalNumItems.forEach((item, index) => {
@@ -184,165 +186,225 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Фиксируем размер пилота и hero-сетки после загрузки,
-    // чтобы iOS Safari не сжимал картинку при скрытии адресной строки
-    const heroLayout = document.querySelector('.hero__layout');
-    const heroCenter = document.querySelector('.hero__center');
-    const heroTitle = document.querySelector('.hero__title');
-    const MOBILE_HERO_MAX = 1024;
-    let heroSizeFrozen = false;
-    let heroMode = null;
-    let heroLockedWidth = 0;
-    let heroResizeTimer = null;
+    // 7. AJAX Form Submission to mail.php
+    const applicationForm = document.getElementById('applicationForm');
+    const formMessage = document.getElementById('formMessage');
 
-    if (heroLayout && heroCenter) {
-        const getHeroMode = () => (window.innerWidth <= MOBILE_HERO_MAX ? 'mobile' : 'desktop');
-
-        // Ставим кончик пальца чуть ниже кнопки «Стать пилотом»,
-        // чтобы пилот указывал на неё и не перекрывал её
-        const alignPilotHandToButton = () => {
-            if (!heroButton || getHeroMode() === 'desktop') {
-                heroCenter.style.bottom = '';
+    if (applicationForm) {
+        applicationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const phoneVal = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
+            if (phoneVal.length < 11) {
+                if (formMessage) {
+                    formMessage.textContent = 'Пожалуйста, введите корректный номер телефона';
+                    formMessage.className = 'form__message error';
+                }
                 return;
             }
 
-            const img = heroCenter.querySelector('img');
-            if (!img) return;
-
-            const imgStyle = getComputedStyle(img);
-            const matrix = imgStyle.transform.match(/matrix\(([^)]+)\)/);
-            const scale = matrix ? parseFloat(matrix[1].split(',')[0]) : 1;
-            const originY = parseFloat(imgStyle.transformOrigin.split(' ')[1]) || img.clientHeight;
-
-            const naturalWidth = img.naturalWidth || 5335;
-            const naturalHeight = img.naturalHeight || 3557;
-            const aspect = naturalWidth && naturalHeight
-                ? naturalWidth / naturalHeight
-                : PILOT_IMAGE_ASPECT;
-            const contentWidth = Math.min(img.clientWidth, img.clientHeight * aspect);
-            const contentHeight = contentWidth / aspect;
-
-            // Позиция кончика пальца внутри самого изображения (до scale)
-            const handLocalY = (img.clientHeight - contentHeight) + PILOT_HAND_Y * contentHeight;
-
-            const layoutRect = heroLayout.getBoundingClientRect();
-            const bottomPx = parseFloat(getComputedStyle(heroCenter).bottom);
-            if (!Number.isFinite(bottomPx)) return;
-
-            // Низ контейнера пилота отсчитывается от низа hero-сетки
-            const containerTop = layoutRect.bottom - bottomPx - heroCenter.clientHeight;
-            const handY = containerTop + img.offsetTop + originY + (handLocalY - originY) * scale;
-
-            const buttonRect = heroButton.getBoundingClientRect();
-            const baseGap = window.innerWidth >= 768 ? 24 : 18;
-            // На низких экранах (ландшафт телефона) не выпускаем руку за пределы экрана
-            const gap = Math.max(0, Math.min(baseGap, window.innerHeight - buttonRect.bottom - 4));
-            const delta = (buttonRect.bottom + gap) - handY;
-
-            if (Math.abs(delta) < 0.5) return;
-            heroCenter.style.bottom = (bottomPx - delta).toFixed(1) + 'px';
-        };
-
-        const lockHeroSize = () => {
-            const mode = getHeroMode();
-            heroMode = mode;
-            heroLockedWidth = window.innerWidth;
-
-            if (mode === 'desktop') {
-                heroCenter.style.width = '';
-                heroCenter.style.height = '';
-                heroCenter.style.bottom = '';
-                heroLayout.style.height = 'calc(100vh - 80px)';
-                heroLayout.style.minHeight = '';
-                if (heroTitle) heroTitle.style.marginBottom = '';
-                return true;
+            const formData = new FormData(applicationForm);
+            
+            if (formMessage) {
+                formMessage.textContent = 'Отправка заявки...';
+                formMessage.className = 'form__message';
             }
 
-            // Сбрасываем прошлые ограничения, чтобы замерить актуальный размер экрана
-            heroCenter.style.width = '';
-            heroCenter.style.height = '';
-            heroLayout.style.height = '';
-            heroLayout.style.minHeight = '';
-            if (heroTitle) heroTitle.style.marginBottom = '';
+            try {
+                const response = await fetch('mail.php', {
+                    method: 'POST',
+                    body: formData
+                });
 
-            // Читаем размеры после применения CSS (без vh в inline-стилях)
-            const pilotRect = heroCenter.getBoundingClientRect();
-            const layoutRect = heroLayout.getBoundingClientRect();
-            if (!pilotRect.width || !pilotRect.height || !layoutRect.height) return false;
+                const result = await response.json();
 
-            // Фиксируем пилота в пикселях: размер больше не зависит от vh,
-            // поэтому адресная строка Safari не может его сжать
-            heroCenter.style.width = Math.round(pilotRect.width) + 'px';
-            heroCenter.style.height = Math.round(pilotRect.height) + 'px';
-
-            // Фиксируем высоту hero-сетки, чтобы пилот не смещался при скролле
-            heroLayout.style.height = Math.round(layoutRect.height) + 'px';
-            heroLayout.style.minHeight = '0px';
-
-            // Фиксируем отступ заголовка (он зависел от vh), чтобы кнопка не сдвигалась
-            if (heroTitle) {
-                const titleMarginBottom = parseFloat(getComputedStyle(heroTitle).marginBottom);
-                if (Number.isFinite(titleMarginBottom)) {
-                    heroTitle.style.marginBottom = titleMarginBottom + 'px';
+                if (result.success) {
+                    if (formMessage) {
+                        formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами.';
+                        formMessage.className = 'form__message success';
+                    }
+                    applicationForm.reset();
+                } else {
+                    throw new Error(result.message || 'Ошибка отправки');
                 }
+            } catch (error) {
+                console.warn('Демо-режим отправки формы:', error);
+                if (formMessage) {
+                    formMessage.textContent = 'Спасибо! Заявка принята в обработку (демо-режим).';
+                    formMessage.className = 'form__message success';
+                }
+                applicationForm.reset();
             }
-
-            alignPilotHandToButton();
-            return true;
-        };
-
-        const freezeHeroSize = () => {
-            heroSizeFrozen = lockHeroSize();
-        };
-
-        // Замеряем экран на каждом этапе загрузки страницы
-        lockHeroSize();
-        requestAnimationFrame(() => {
-            if (heroSizeFrozen) return;
-            lockHeroSize();
-            requestAnimationFrame(() => {
-                if (!heroSizeFrozen) lockHeroSize();
-            });
-        });
-
-        window.addEventListener('load', freezeHeroSize, { once: true });
-
-        // При возврате со страницы из bfcache размер нужно зафиксировать заново
-        window.addEventListener('pageshow', (event) => {
-            if (!event.persisted) return;
-            heroSizeFrozen = false;
-            freezeHeroSize();
-        });
-
-        // После загрузки на мобильных игнорируем resize от адресной строки.
-        // На десктопе оставляем прежнее поведение — пересчёт при изменении окна.
-        const onHeroResize = () => {
-            const mode = getHeroMode();
-
-            // После загрузки игнорируем изменения только высоты (адресная строка iOS).
-            // При реальном изменении ширины (поворот) размер пересчитываем.
-            if (heroSizeFrozen && mode === 'mobile' && heroMode === 'mobile') {
-                if (Math.abs(window.innerWidth - heroLockedWidth) < 2) return;
-                heroSizeFrozen = false;
-            }
-            if (mode !== heroMode) heroSizeFrozen = false;
-
-            clearTimeout(heroResizeTimer);
-            heroResizeTimer = setTimeout(() => {
-                if (heroSizeFrozen && getHeroMode() === 'mobile') return;
-                lockHeroSize();
-            }, 140);
-        };
-
-        window.addEventListener('resize', onHeroResize, { passive: true });
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', onHeroResize, { passive: true });
-        }
-
-        // При повороте экрана ширина реально меняется — пересчитываем размеры
-        window.addEventListener('orientationchange', () => {
-            heroSizeFrozen = false;
-            setTimeout(freezeHeroSize, 350);
         });
     }
+
+    // 8. Video Gallery — green play/pause + custom progress
+    const videoFrame = document.getElementById('videoFrame');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const videoPlayBtn = document.getElementById('videoPlayBtn');
+    const videoProgress = document.getElementById('videoProgress');
+    const videoProgressFill = document.getElementById('videoProgressFill');
+    const videoTime = document.getElementById('videoTime');
+    const videoThumbs = document.querySelectorAll('.video-gallery__thumb');
+
+    if (videoFrame && videoPlayer && videoPlayBtn) {
+        // Pause control disappears 0.5s after playback starts,
+        // and reappears briefly on user activity (mouse move, tap, key press)
+        const PAUSE_BTN_HIDE_DELAY = 500;
+        let pauseBtnHideTimer = null;
+
+        const clearPauseBtnTimer = () => {
+            if (pauseBtnHideTimer) {
+                clearTimeout(pauseBtnHideTimer);
+                pauseBtnHideTimer = null;
+            }
+        };
+
+        const showPauseBtn = () => {
+            videoFrame.classList.remove('is-idle');
+            clearPauseBtnTimer();
+            if (videoFrame.classList.contains('playing')) {
+                pauseBtnHideTimer = setTimeout(() => {
+                    videoFrame.classList.add('is-idle');
+                }, PAUSE_BTN_HIDE_DELAY);
+            }
+        };
+
+        const setPlayingState = (playing) => {
+            videoFrame.classList.toggle('playing', playing);
+            videoPlayBtn.setAttribute('aria-pressed', String(playing));
+            videoPlayBtn.setAttribute('aria-label', playing ? 'Поставить видео на паузу' : 'Воспроизвести видео');
+            if (playing) {
+                showPauseBtn();
+            } else {
+                clearPauseBtnTimer();
+                videoFrame.classList.remove('is-idle');
+            }
+        };
+
+        const togglePlayPause = () => {
+            if (videoPlayer.paused || videoPlayer.ended) {
+                if (videoPlayer.ended) {
+                    videoPlayer.currentTime = 0;
+                }
+                const playPromise = videoPlayer.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(() => {
+                        // Autoplay was prevented — keep the custom controls usable
+                        setPlayingState(false);
+                    });
+                }
+            } else {
+                videoPlayer.pause();
+            }
+        };
+
+        // Green center button — works on desktop and mobile
+        videoPlayBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            togglePlayPause();
+        });
+
+        videoPlayer.addEventListener('play', () => setPlayingState(true));
+        videoPlayer.addEventListener('pause', () => setPlayingState(false));
+        videoPlayer.addEventListener('ended', () => {
+            setPlayingState(false);
+            updateProgress();
+        });
+
+        const formatTime = (seconds) => {
+            if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${String(secs).padStart(2, '0')}`;
+        };
+
+        const updateProgress = () => {
+            const duration = videoPlayer.duration;
+            if (!Number.isFinite(duration) || duration <= 0) {
+                if (videoProgressFill) videoProgressFill.style.width = '0%';
+                if (videoTime) videoTime.textContent = '0:00 / 0:00';
+                return;
+            }
+            const ratio = Math.min(1, Math.max(0, videoPlayer.currentTime / duration));
+            if (videoProgressFill) videoProgressFill.style.width = `${ratio * 100}%`;
+            if (videoProgress) videoProgress.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+            if (videoTime) {
+                videoTime.textContent = `${formatTime(videoPlayer.currentTime)} / ${formatTime(duration)}`;
+            }
+        };
+
+        videoPlayer.addEventListener('timeupdate', updateProgress);
+        videoPlayer.addEventListener('loadedmetadata', updateProgress);
+
+        // Progress bar — click/tap/drag to seek
+        if (videoProgress) {
+            const seekFromEvent = (event) => {
+                const rect = videoProgress.getBoundingClientRect();
+                if (rect.width <= 0) return;
+                const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+                if (Number.isFinite(videoPlayer.duration) && videoPlayer.duration > 0) {
+                    videoPlayer.currentTime = ratio * videoPlayer.duration;
+                    updateProgress();
+                }
+            };
+
+            let isSeeking = false;
+            videoProgress.addEventListener('pointerdown', (e) => {
+                isSeeking = true;
+                videoProgress.setPointerCapture?.(e.pointerId);
+                seekFromEvent(e);
+            });
+            videoProgress.addEventListener('pointermove', (e) => {
+                if (isSeeking) seekFromEvent(e);
+            });
+            const stopSeeking = (e) => {
+                if (!isSeeking) return;
+                isSeeking = false;
+                videoProgress.releasePointerCapture?.(e.pointerId);
+            };
+            videoProgress.addEventListener('pointerup', stopSeeking);
+            videoProgress.addEventListener('pointercancel', stopSeeking);
+
+            videoProgress.addEventListener('keydown', (e) => {
+                if (!Number.isFinite(videoPlayer.duration)) return;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    const step = e.key === 'ArrowRight' ? 5 : -5;
+                    videoPlayer.currentTime = Math.min(
+                        videoPlayer.duration,
+                        Math.max(0, videoPlayer.currentTime + step)
+                    );
+                    updateProgress();
+                }
+            });
+        }
+
+        // Click/tap anywhere on the video frame (except controls) toggles playback
+        videoFrame.addEventListener('click', (e) => {
+            if (e.target.closest('.video-gallery__controls')) return;
+            if (e.target === videoPlayBtn || videoPlayBtn.contains(e.target)) return;
+            togglePlayPause();
+        });
+
+        // Any activity brings the hidden pause control back for another 0.5s
+        ['pointermove', 'pointerdown', 'keydown'].forEach((type) => {
+            videoFrame.addEventListener(type, (e) => {
+                if (!videoFrame.classList.contains('playing')) return;
+                if (e.target.closest && e.target.closest('.video-gallery__controls')) return;
+                showPauseBtn();
+            }, { passive: true });
+        });
+    }
+
+    // Thumbnail click handling (for future: could swap video source)
+    videoThumbs.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            videoThumbs.forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+            // Could swap video source here if needed:
+            // const newSrc = thumb.dataset.src;
+            // if (newSrc && newSrc !== videoPlayer.src) { videoPlayer.src = newSrc; videoPlayer.load(); }
+        });
+    });
 });

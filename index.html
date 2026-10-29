@@ -6,7 +6,13 @@
     <title>DOZARI KARTING — Профессиональная гоночная команда</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <!-- Шрифты подключаем без блокировки первой отрисовки (текст сразу виден в системном шрифте, затем подменяется) -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;0,900;1,700;1,900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;0,900;1,700;1,900&display=swap" rel="stylesheet"></noscript>
+    <!-- Критичные для первого экрана ресурсы начинаем грузить как можно раньше -->
+    <link rel="preload" as="image" href="images/fon.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="images/pilot-cutout-full.png" fetchpriority="high">
+    <link rel="preload" as="style" href="style.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,8 +21,8 @@
     <header class="header">
         <div class="container header__container">
             <a href="#" class="logo" aria-label="DOZARI TEAM">
-                <img src="images/logo_l.png" alt="DOZARI TEAM" class="logo__image logo__image--light">
-                <img src="images/logo_b.png" alt="" aria-hidden="true" class="logo__image logo__image--dark">
+                <img src="images/logo_l.png" width="400" height="174" alt="DOZARI TEAM" class="logo__image logo__image--light">
+                <img src="images/logo_b.png" width="400" height="174" alt="" aria-hidden="true" class="logo__image logo__image--dark">
             </a>
             <nav class="nav" id="navMenu">
                 <ul class="nav__list">
@@ -73,9 +79,14 @@
             </div>
         </div>
 
-                <!-- ЦЕНТР: Пилот (PNG без фона) -->
+                <!-- ЦЕНТР: Пилот (PNG с прозрачностью, оптимизированный) -->
                 <div class="hero__center">
-                    <img src="images/pilot-cutout-full.png" alt="Пилот команды DOZARI">
+                    <img
+                        src="images/pilot-cutout-full.png"
+                        width="1600" height="1237"
+                        alt="Пилот команды DOZARI"
+                        fetchpriority="high"
+                        decoding="async">
                 </div>
 
                
@@ -141,19 +152,19 @@
                                 <span class="phil-wreaths__label"><i class="phil-dot phil-dot--gold"></i>4 золота</span>
                                 <div class="phil-wreaths__items">
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/gold.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2016</span>
                                     </div>
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/gold.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2017</span>
                                     </div>
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/gold.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2024</span>
                                     </div>
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/gold.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/gold.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2025</span>
                                     </div>
                                 </div>
@@ -162,15 +173,15 @@
                                 <span class="phil-wreaths__label"><i class="phil-dot phil-dot--silver"></i>3 серебра</span>
                                 <div class="phil-wreaths__items">
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/silver.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/silver.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2016</span>
                                     </div>
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/silver.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/silver.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2017</span>
                                     </div>
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/silver.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/silver.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2023</span>
                                     </div>
                                 </div>
@@ -179,7 +190,7 @@
                                 <span class="phil-wreaths__label"><i class="phil-dot phil-dot--bronze"></i>1 бронза</span>
                                 <div class="phil-wreaths__items">
                                     <div class="phil-wreath__wrapper">
-                                        <img class="phil-wreath" src="images/bronze.png" alt="" aria-hidden="true">
+                                        <img class="phil-wreath" src="images/bronze.png" width="160" height="160" alt="" aria-hidden="true" loading="lazy" decoding="async">
                                         <span class="phil-wreath__year">2018</span>
                                     </div>
                                 </div>
@@ -232,7 +243,7 @@
                         <h2><span>ВЕСЬ</span><span>ГОНОЧНЫЙ</span><span class="accent-green">ПРОЦЕСС</span></h2>
                     </div>
                     <div class="program__image-banner">
-                        <img src="images/race.jpg" alt="Гонка">
+                        <img src="images/race.jpg" width="1600" height="1067" alt="Гонка" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="program__layout">
@@ -287,33 +298,62 @@
             </div>
         </section>
 
-        <section class="path-section">
+        <!-- Видео-галерея -->
+        <section class="video-gallery" id="video-gallery">
             <div class="container">
-                <div class="path__wrapper">
-                    <div class="path__info">
-                        <span class="section-tag section-tag--dashes"><span class="dash"></span>ПУТЬ ПИЛОТА<span class="dash"></span></span>
-                        <h2>РОССИЯ → МИР</h2>
-                        <p>Мы выступаем на главных трассах России, боремся за титул чемпиона страны и даем возможность талантливым пилотам представлять Россию на чемпионате мира.</p>
+                <div class="video-gallery__grid">
+                    <!-- Левая колонка превью -->
+                    <div class="video-gallery__thumbs video-gallery__thumbs--left">
+                        <button class="video-gallery__thumb" data-src="images/cart.jpg" data-poster="images/cart.jpg" aria-label="Превью 1">
+                            <img src="images/cart.jpg" alt="" loading="lazy" decoding="async" width="400" height="267">
+                        </button>
+                        <button class="video-gallery__thumb" data-src="images/slide1.jpg" data-poster="images/slide1.jpg" aria-label="Превью 2">
+                            <img src="images/slide1.jpg" alt="" loading="lazy" decoding="async" width="400" height="267">
+                        </button>
                     </div>
-                    <div class="path__cards">
-                        <div class="path-card">
-                            <div class="path-card__icon-box">
-                                <img src="images/icon_helmet.png" alt="Чемпионат России" class="path-card__png">
-                            </div>
-                            <div>
-                                <h3>Чемпионат России</h3>
-                                <p>Победа, титул, официальный статус чемпиона России</p>
+                    
+                    <!-- Центральное видео -->
+                    <div class="video-gallery__main">
+                        <div class="video-gallery__frame" id="videoFrame">
+                            <video 
+                                class="video-gallery__media" 
+                                id="videoPlayer"
+                                src="images/video.mp4" 
+                                poster="images/video-poster.jpg"
+                                preload="metadata"
+                                playsinline>
+                            </video>
+
+                            <div class="video-gallery__overlay" id="videoOverlay"></div>
+
+                            <button class="video-gallery__play-btn" id="videoPlayBtn" aria-label="Воспроизвести видео" aria-pressed="false">
+                                <svg class="video-gallery__play-icon" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <polygon points="28,20 28,60 64,40" fill="var(--accent)"/>
+                                </svg>
+                                <svg class="video-gallery__pause-icon" width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="27" y="20" width="10" height="40" fill="var(--accent)" rx="2"/>
+                                    <rect x="43" y="20" width="10" height="40" fill="var(--accent)" rx="2"/>
+                                </svg>
+                            </button>
+
+                            <div class="video-gallery__controls">
+                                <div class="video-gallery__progress" id="videoProgress" role="slider" tabindex="0"
+                                     aria-label="Прогресс видео" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                    <div class="video-gallery__progress-fill" id="videoProgressFill"></div>
+                                </div>
+                                <span class="video-gallery__time" id="videoTime">0:00 / 0:00</span>
                             </div>
                         </div>
-                        <div class="path-card">
-                            <div class="path-card__icon-box">
-                                <img src="images/icon_driver.png" alt="Чемпионат мира" class="path-card__png">
-                            </div>
-                            <div>
-                                <h3>Чемпионат мира</h3>
-                                <p>Лучшие пилоты команды получают шанс выступить на мировой арене</p>
-                            </div>
-                        </div>
+                    </div>
+                    
+                    <!-- Правая колонка превью -->
+                    <div class="video-gallery__thumbs video-gallery__thumbs--right">
+                        <button class="video-gallery__thumb" data-src="images/slide2.jpg" data-poster="images/slide2.jpg" aria-label="Превью 3">
+                            <img src="images/slide2.jpg" alt="" loading="lazy" decoding="async" width="400" height="267">
+                        </button>
+                        <button class="video-gallery__thumb" data-src="images/slide3.jpg" data-poster="images/slide3.jpg" aria-label="Превью 4">
+                            <img src="images/slide3.jpg" alt="" loading="lazy" decoding="async" width="400" height="267">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -329,7 +369,7 @@
                 <div class="management__grid">
                     <div class="management-card">
                         <div class="management-card__img">
-                            <img src="images/sergey_andreevich.jpg" alt="Владелец" loading="lazy">
+                            <img src="images/sergey_andreevich.jpg" width="800" height="533" alt="Владелец" loading="lazy" decoding="async">
                         </div>
                         <div class="management-card__content">
                             <h3>ЖЕРЕБЯТЬЕВ СЕРГЕЙ АНДРЕЕВИЧ</h3>
@@ -338,7 +378,7 @@
                     </div>
                     <div class="management-card">
                         <div class="management-card__img">
-                            <img src="images/ivan_nosov.jpg" alt="Тренер" loading="lazy">
+                            <img src="images/ivan_nosov.jpg" width="800" height="534" alt="Тренер" loading="lazy" decoding="async">
                         </div>
                         <div class="management-card__content">
                             <h3>ИВАН НОСОВ</h3>
@@ -347,11 +387,51 @@
                     </div>
                     <div class="management-card">
                         <div class="management-card__img">
-                            <img src="images/vitaly_eduarovich.jpg" alt="Главный тренер" loading="lazy">
+                            <img src="images/vitaly_eduarovich.jpg" width="800" height="533" alt="Главный тренер" loading="lazy" decoding="async">
                         </div>
                         <div class="management-card__content">
-                            <h3>БИРЮКОВ ВИТАЛИЙ</h3>
+                            <h3>БИРЮКОВ ВИТАЛИЙ ЭДУАРДОВИЧ</h3>
                             <p class="management-card__role">Главный инженер</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Механики: 4 карточки под руководством -->
+                <div class="management__grid management__grid--mechanics">
+                    <div class="management-card management-card--mechanic">
+                        <div class="management-card__img">
+                            <img src="images/ribalko_ivan.jpg" width="900" height="600" alt="Механик" loading="lazy" decoding="async">
+                        </div>
+                        <div class="management-card__content">
+                            <h3>РЫБАЛКО ИВАН</h3>
+                            <p class="management-card__role">Механик</p>
+                        </div>
+                    </div>
+                    <div class="management-card management-card--mechanic">
+                        <div class="management-card__img">
+                            <img src="images/laksh_vladimir.jpg" width="900" height="600" alt="Механик" loading="lazy" decoding="async">
+                        </div>
+                        <div class="management-card__content">
+                            <h3>ЛАКШ ВЛАДИМИР</h3>
+                            <p class="management-card__role">Механик</p>
+                        </div>
+                    </div>
+                    <div class="management-card management-card--mechanic">
+                        <div class="management-card__img">
+                            <img src="images/tarasenko_vladimir.jpg" width="900" height="600" alt="Механик" loading="lazy" decoding="async">
+                        </div>
+                        <div class="management-card__content">
+                            <h3>ТАРАСЕНКО ВЛАДИМИР</h3>
+                            <p class="management-card__role">Механик</p>
+                        </div>
+                    </div>
+                    <div class="management-card management-card--mechanic">
+                        <div class="management-card__img">
+                            <img src="images/harash_leonid.jpg" width="853" height="1280" alt="Механик" loading="lazy" decoding="async">
+                        </div>
+                        <div class="management-card__content">
+                            <h3>ХАРАШ ЛЕОНИД</h3>
+                            <p class="management-card__role">Механик</p>
                         </div>
                     </div>
                 </div>
@@ -368,7 +448,7 @@
                 <div class="athletes__grid">
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/artgor.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/artgor.jpg" width="900" height="600" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>ГОРБАТЕНКО АРТЁМ</h3>
@@ -377,7 +457,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/arscar.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/arscar.jpg" width="853" height="853" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>ЦАРЕВ АРСЕНИЙ</h3>
@@ -386,7 +466,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/ivapar.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/ivapar.jpg" width="900" height="600" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>ПАРШИН ИВАН</h3>
@@ -395,7 +475,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/makmar.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/makmar.jpg" width="900" height="599" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>МАРЧЕНКО МАКСИМ</h3>
@@ -404,7 +484,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/mazpol.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/mazpol.jpg" width="900" height="600" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>МАЗЫКИНА ПОЛИНА</h3>
@@ -413,7 +493,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/stesig.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/stesig.jpg" width="900" height="600" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>СИГИНУР СТЕПАН</h3>
@@ -422,7 +502,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/marand.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/marand.jpg" width="594" height="781" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>АНДРЕАСЯН МАРК</h3>
@@ -431,7 +511,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/malmar.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/malmar.jpg" width="853" height="853" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>МАЛЫШЕВ МАРКО</h3>
@@ -440,7 +520,7 @@
                     </div>
                     <div class="athlete-card">
                         <div class="athlete-card__img">
-                            <img src="images/kulgeo.jpg" alt="Пилот" loading="lazy">
+                            <img src="images/kulgeo.jpg" width="853" height="853" alt="Пилот" loading="lazy" decoding="async">
                         </div>
                         <div class="athlete-card__content">
                             <h3>КУЛИШ ГЕОРГИЙ</h3>
@@ -517,8 +597,8 @@
         <div class="container footer__container">
             <div class="footer__col">
                 <a href="#" class="logo" aria-label="DOZARI TEAM">
-                    <img src="images/logo_l.png" alt="DOZARI TEAM" class="logo__image logo__image--light">
-                    <img src="images/logo_b.png" alt="" aria-hidden="true" class="logo__image logo__image--dark">
+                    <img src="images/logo_l.png" width="400" height="174" alt="DOZARI TEAM" class="logo__image logo__image--light">
+                    <img src="images/logo_b.png" width="400" height="174" alt="" aria-hidden="true" class="logo__image logo__image--dark">
                 </a>
                 <p class="footer__desc">Профессиональная гоночная команда DOZARI TEAM.</p>
             </div>
