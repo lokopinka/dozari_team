@@ -407,4 +407,41 @@ document.addEventListener('DOMContentLoaded', () => {
             // if (newSrc && newSrc !== videoPlayer.src) { videoPlayer.src = newSrc; videoPlayer.load(); }
         });
     });
+
+    // 9. Address links — open native map apps on mobile, keep web maps on desktop
+    const isMobileDevice = () => {
+        const ua = navigator.userAgent || '';
+        const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        return /Android|iPhone|iPad|iPod|Windows Phone|Mobile/i.test(ua) || coarsePointer;
+    };
+
+    if (isMobileDevice()) {
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+
+        document.querySelectorAll('a[data-app-link], a[data-app-link-ios]').forEach(link => {
+            link.addEventListener('click', (event) => {
+                const appUrl = (isIOS && link.dataset.appLinkIos) || link.dataset.appLink;
+                if (!appUrl) return;
+
+                event.preventDefault();
+
+                let appOpened = false;
+                const markOpened = () => { appOpened = true; };
+
+                document.addEventListener('visibilitychange', markOpened, { once: true });
+                window.addEventListener('pagehide', markOpened, { once: true });
+
+                // Try to open the native app
+                window.location.href = appUrl;
+
+                // If the app didn't take over — fall back to the web version
+                window.setTimeout(() => {
+                    document.removeEventListener('visibilitychange', markOpened);
+                    window.removeEventListener('pagehide', markOpened);
+                    if (appOpened || document.visibilityState === 'hidden') return;
+                    window.location.href = link.href;
+                }, 1400);
+            });
+        });
+    }
 });

@@ -2644,6 +2644,11 @@ h2 {
     border-radius: 4px;
     color: #ffffff;
     text-align: center;
+    transition: border-color 0.25s ease;
+}
+
+.contacts__address:hover {
+    border-color: var(--accent);
 }
 
 .contacts__address strong {
@@ -2662,6 +2667,31 @@ h2 {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
+}
+
+.contacts__map-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px 18px;
+    margin-top: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.contacts__map-links a {
+    color: #d0d5dd;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    padding-bottom: 2px;
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.contacts__map-links a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
 }
 
 .footer__social-link svg {
