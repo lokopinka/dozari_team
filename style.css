@@ -1440,6 +1440,422 @@ h2 {
     color: var(--text-muted);
 }
 
+/* ==========================================================================
+   VIDEO GALLERY — centered video with full-bleed side images
+   Breakpoints: Desktop ≥1366px · Laptop 1025–1365px
+                Tablet 769–1024px · Phone ≤768px
+   ========================================================================== */
+.video-gallery {
+    padding: 0;
+    background-color: var(--tone-dark);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/* Remove the global container gutter so photos reach the screen edges */
+.video-gallery > .container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+
+.video-gallery::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: url('images/Russia.png') center / cover no-repeat;
+    opacity: 0.04;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Desktop (PC) — 3 columns, side photos fill their full blocks */
+.video-gallery__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 0;
+    align-items: stretch;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 100vh;
+    min-height: 760px;
+}
+
+/* Thumbnails columns — images fill the entire block edge-to-edge */
+.video-gallery__thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.video-gallery__thumbs--left,
+.video-gallery__thumbs--right {
+    border: none;
+}
+
+.video-gallery__thumb {
+    position: relative;
+    border: none;
+    background: #0d0f12;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 0;
+    overflow: hidden;
+    flex: 1 1 50%;
+    min-height: 0;
+    opacity: 1;
+}
+
+.video-gallery__thumb:active {
+    transform: scale(0.995);
+}
+
+.video-gallery__thumb.active {
+    opacity: 1;
+}
+
+.video-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease, filter 0.4s ease;
+}
+
+.video-gallery__thumb:hover img {
+    transform: scale(1.06);
+    filter: brightness(1.08);
+}
+
+/* Main video area — stays centered while photos fill the sides */
+.video-gallery__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 24px;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 70%);
+}
+
+.video-gallery__frame {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 
+        0 40px 100px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(255,255,255,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    /* Vertical video 9:16 (704×1280) — never taller than 88vh */
+    aspect-ratio: 9 / 16;
+    width: min(100%, calc(88vh * 9 / 16), 620px);
+    max-height: 88vh;
+    margin: 0 auto;
+}
+
+.video-gallery__media {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #000;
+}
+
+/* Play/Pause button overlay — green accent palette */
+.video-gallery__play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 96px;
+    height: 96px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    opacity: 1;
+    border-radius: 50%;
+}
+
+.video-gallery__play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+.video-gallery__play-btn:active {
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+.video-gallery__play-btn:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 4px;
+}
+
+.video-gallery__play-icon polygon,
+.video-gallery__pause-icon rect {
+    fill: var(--accent);
+    transition: fill 0.25s ease;
+}
+
+.video-gallery__play-btn:hover .video-gallery__play-icon polygon,
+.video-gallery__play-btn:hover .video-gallery__pause-icon rect,
+.video-gallery__play-btn:focus-visible .video-gallery__play-icon polygon,
+.video-gallery__play-btn:focus-visible .video-gallery__pause-icon rect {
+    fill: var(--accent-hover);
+}
+
+.video-gallery__play-icon,
+.video-gallery__pause-icon {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    /* Subtle shadow keeps the green glyph readable on bright video frames */
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+}
+
+.video-gallery__frame.playing .video-gallery__play-icon {
+    display: none;
+}
+
+.video-gallery__frame.playing .video-gallery__pause-icon {
+    display: block;
+}
+
+.video-gallery__frame:not(.playing) .video-gallery__pause-icon {
+    display: none;
+}
+
+/* Pause control stays visible right after playback starts, then fades away */
+.video-gallery__frame.playing .video-gallery__play-btn {
+    opacity: 1;
+}
+
+/* Hidden ~0.5s after playback starts — clicking/tapping the video still pauses it */
+.video-gallery__frame.is-idle .video-gallery__play-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Keep the control reachable for keyboard users even while hidden */
+.video-gallery__frame.is-idle:focus-within .video-gallery__play-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.video-gallery__frame.playing .video-gallery__overlay {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.video-gallery__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.28) 100%);
+    z-index: 2;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* Custom control bar (green progress + time) */
+.video-gallery__controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 40px 16px 14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0));
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.video-gallery__progress {
+    position: relative;
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    cursor: pointer;
+    touch-action: none;
+}
+
+/* Larger invisible hit area for easy tapping */
+.video-gallery__progress::before {
+    position: absolute;
+    inset: -12px 0;
+    content: '';
+}
+
+.video-gallery__progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.15s linear;
+}
+
+.video-gallery__time {
+    flex: 0 0 auto;
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+/* Native controls are replaced by the green custom controls */
+.video-gallery__media::-webkit-media-controls,
+.video-gallery__media::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+/* ==========================================================================
+   LAPTOP — 1025–1365px · 3 columns, photos fill blocks, smaller video
+   ========================================================================== */
+@media (max-width: 1365px) {
+    .video-gallery__grid {
+        grid-template-columns: 1fr 1.15fr 1fr;
+        min-height: 700px;
+    }
+
+    .video-gallery__main {
+        padding: 20px;
+    }
+
+    .video-gallery__frame {
+        width: min(100%, calc(84vh * 9 / 16), 520px);
+        max-height: 84vh;
+    }
+
+    .video-gallery__play-btn {
+        width: 84px;
+        height: 84px;
+    }
+}
+
+/* ==========================================================================
+   TABLET — 769–1024px · 3 columns kept, video centered and narrower
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .video-gallery__grid {
+        grid-template-columns: 0.9fr 1.25fr 0.9fr;
+        min-height: 620px;
+    }
+
+    .video-gallery__main {
+        padding: 16px;
+    }
+
+    .video-gallery__frame {
+        width: min(100%, calc(80vh * 9 / 16), 430px);
+        max-height: 80vh;
+        border-radius: 12px;
+    }
+
+    .video-gallery__play-btn {
+        width: 76px;
+        height: 76px;
+    }
+
+    .video-gallery__time {
+        font-size: 11px;
+    }
+}
+
+/* ==========================================================================
+   PHONE — ≤768px · video only, full-screen, no photos, green controls
+   ========================================================================== */
+@media (max-width: 768px) {
+    .video-gallery {
+        background: #000;
+        min-height: 100vh;
+        min-height: 100svh;
+    }
+
+    .video-gallery::before {
+        display: none;
+    }
+
+    .video-gallery > .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .video-gallery__grid {
+        grid-template-columns: 1fr;
+        height: 100vh;
+        height: 100svh;
+        min-height: 100vh;
+        min-height: 100svh;
+    }
+
+    .video-gallery__thumbs {
+        display: none !important; /* Photos are hidden on phones */
+    }
+
+    .video-gallery__main {
+        padding: 0;
+        background: #000;
+    }
+
+    .video-gallery__frame {
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        height: 100svh;
+        max-height: 100vh;
+        max-height: 100svh;
+        aspect-ratio: auto;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .video-gallery__media {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-gallery__play-btn {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Controls stay visible on touch screens */
+    .video-gallery__controls {
+        opacity: 1;
+        padding: 44px 14px max(14px, env(safe-area-inset-bottom));
+    }
+
+    .video-gallery__time {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-gallery__play-btn {
+        width: 64px;
+        height: 64px;
+    }
+
+    .video-gallery__controls {
+        padding: 40px 12px max(12px, env(safe-area-inset-bottom));
+    }
+}
+
 /* Management Section */
 .management {
     padding: 100px 0;
@@ -1500,6 +1916,46 @@ h2 {
     color: var(--accent);
     text-transform: uppercase;
     font-weight: 600;
+}
+
+/* Механики: 4 карточки под руководством — по типу карточек состава команды */
+.management__grid--mechanics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.management__grid--mechanics .management-card__img {
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
+.management__grid--mechanics .management-card__content {
+    padding: 18px 16px;
+}
+
+.management__grid--mechanics .management-card__content h3 {
+    font-size: 1rem;
+}
+
+/* Карточка механика тянется по высоте ряда, подпись всегда прижата к низу */
+.management-card--mechanic {
+    display: flex;
+    flex-direction: column;
+}
+
+.management-card--mechanic .management-card__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.management-card--mechanic .management-card__role {
+    margin-top: auto;
+}
+
+.management__grid--mechanics .management-card__role {
+    font-size: 0.8rem;
 }
 
 /* Athletes Section */
@@ -2703,6 +3159,25 @@ h2 {
     }
     .management-card__role {
         font-size: 0.75rem;
+    }
+
+    /* Механики на телефоне: компактная сетка 2×2 вместо длинной ленты */
+    .management__grid--mechanics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+    }
+    .management__grid--mechanics .management-card__content {
+        padding: 12px 8px 14px;
+    }
+    .management__grid--mechanics .management-card__content h3 {
+        font-size: 0.8rem;
+        line-height: 1.25;
+        margin-bottom: 4px;
+    }
+    .management__grid--mechanics .management-card__role {
+        font-size: 0.68rem;
+        letter-spacing: 0.03em;
     }
 
     /* Athletes Section Mobile - CSS Carousel */
