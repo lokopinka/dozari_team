@@ -1551,13 +1551,13 @@ h2 {
     overflow: hidden;
     background: #000;
     box-shadow: 
-        0 40px 100px rgba(0,0,0,0.6),
+        0 22px 48px rgba(0,0,0,0.42),
         0 0 0 1px rgba(255,255,255,0.08),
         inset 0 1px 0 rgba(255,255,255,0.04);
-    /* Vertical video 9:16 (704×1280) — never taller than 88vh */
+    /* Vertical video 9:16 (704×1280) — never taller than 88vh (минус место под кнопку) */
     aspect-ratio: 9 / 16;
-    width: min(100%, calc(88vh * 9 / 16), 620px);
-    max-height: 88vh;
+    width: min(100%, calc((88vh - 100px) * 9 / 16), 620px);
+    max-height: calc(88vh - 100px);
     margin: 0 auto;
 }
 
@@ -1722,6 +1722,65 @@ h2 {
     display: none !important;
 }
 
+/* CTA — «Смотреть ещё» под видео (яркая, крупная, легко нажать) */
+.video-gallery__cta {
+    position: relative;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 20px 54px;
+    min-height: 64px;
+    background-color: #1fd600;
+    background-image: none;
+    color: #ffffff;
+    font-family: var(--font-main);
+    font-weight: 800;
+    font-size: 1.08rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    text-decoration: none;
+    white-space: nowrap;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: none;
+    transition: var(--transition);
+}
+
+.video-gallery__cta span {
+    display: inline-block;
+}
+
+.video-gallery__cta-icon {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    transition: transform var(--transition);
+}
+
+.video-gallery__cta:hover {
+    background-color: #2bea00;
+    transform: translateY(-2px);
+    box-shadow: none;
+}
+
+.video-gallery__cta:hover .video-gallery__cta-icon {
+    transform: translateX(3px);
+}
+
+.video-gallery__cta:active {
+    transform: translateY(0);
+}
+
+.video-gallery__cta:focus-visible {
+    outline: 2px solid #2ae600;
+    outline-offset: 3px;
+}
+
 /* ==========================================================================
    LAPTOP — 1025–1365px · 3 columns, photos fill blocks, smaller video
    ========================================================================== */
@@ -1736,8 +1795,8 @@ h2 {
     }
 
     .video-gallery__frame {
-        width: min(100%, calc(84vh * 9 / 16), 520px);
-        max-height: 84vh;
+        width: min(100%, calc((84vh - 100px) * 9 / 16), 520px);
+        max-height: calc(84vh - 100px);
     }
 
     .video-gallery__play-btn {
@@ -1760,8 +1819,8 @@ h2 {
     }
 
     .video-gallery__frame {
-        width: min(100%, calc(80vh * 9 / 16), 430px);
-        max-height: 80vh;
+        width: min(100%, calc((80vh - 96px) * 9 / 16), 430px);
+        max-height: calc(80vh - 96px);
         border-radius: 12px;
     }
 
@@ -1807,26 +1866,32 @@ h2 {
     }
 
     .video-gallery__main {
+        position: relative;
         padding: 0;
         background: #000;
     }
 
     .video-gallery__frame {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         max-width: 100%;
-        height: 100vh;
-        height: 100svh;
-        max-height: 100vh;
-        max-height: 100svh;
+        height: calc(100vh - 96px);
+        height: calc(100svh - 96px);
+        max-height: calc(100vh - 96px);
+        max-height: calc(100svh - 96px);
         aspect-ratio: auto;
         border-radius: 0;
         box-shadow: none;
     }
 
+    /* Вертикальное видео 9:16 показываем целиком, без обрезки по краям */
     .video-gallery__media {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        object-position: center;
     }
 
     .video-gallery__play-btn {
@@ -1843,6 +1908,15 @@ h2 {
     .video-gallery__time {
         font-size: 11px;
     }
+
+    /* Кнопка под видео — в потоке, по центру, не конфликтует с промо-стикером */
+    .video-gallery__cta {
+        position: relative;
+        margin: 16px auto 0;
+        padding: 17px 38px;
+        min-height: 60px;
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1853,6 +1927,15 @@ h2 {
 
     .video-gallery__controls {
         padding: 40px 12px max(12px, env(safe-area-inset-bottom));
+    }
+
+    .video-gallery__cta {
+        align-self: flex-start;
+        margin: 16px 0 0 20px;
+        padding: 16px 26px;
+        min-height: 56px;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
     }
 }
 
