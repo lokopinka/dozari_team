@@ -191,9 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('formMessage');
 
     if (applicationForm) {
+        const submitButton = applicationForm.querySelector('.form__submit');
+        const formStarted = applicationForm.querySelector('[name="form_started"]');
+
+        // Отметка времени: сервер отбрасывает мгновенные отправки ботов.
+        if (formStarted) formStarted.value = String(Date.now());
+
         applicationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const phoneVal = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
             if (phoneVal.length < 11) {
                 if (formMessage) {
@@ -204,7 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const formData = new FormData(applicationForm);
-            
+
+            if (submitButton) submitButton.disabled = true;
             if (formMessage) {
                 formMessage.textContent = 'Отправка заявки...';
                 formMessage.className = 'form__message';
@@ -213,27 +220,41 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch('mail.php', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
                 });
 
-                const result = await response.json();
-
-                if (result.success) {
-                    if (formMessage) {
-                        formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами.';
-                        formMessage.className = 'form__message success';
-                    }
-                    applicationForm.reset();
-                } else {
-                    throw new Error(result.message || 'Ошибка отправки');
+                let result = null;
+                try {
+                    result = await response.json();
+                } catch (parseError) {
+                    result = null;
                 }
-            } catch (error) {
-                console.warn('Демо-режим отправки формы:', error);
+
+                if (!response.ok || !result || !result.success) {
+                    const failure = new Error((result && result.message) || 'Ошибка отправки');
+                    if (result && result.message) {
+                        failure.userMessage = result.message;
+                    }
+                    throw failure;
+                }
+
                 if (formMessage) {
-                    formMessage.textContent = 'Спасибо! Заявка принята в обработку (демо-режим).';
+                    formMessage.textContent = result.message || 'Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами.';
                     formMessage.className = 'form__message success';
                 }
+
                 applicationForm.reset();
+                if (phoneInput) phoneInput.value = '';
+            } catch (error) {
+                console.error('Ошибка отправки формы:', error);
+                if (formMessage) {
+                    formMessage.textContent = error.userMessage
+                        || 'Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам: +7 (905) 549-60-06';
+                    formMessage.className = 'form__message error';
+                }
+            } finally {
+                if (submitButton) submitButton.disabled = false;
             }
         });
     }
@@ -444,4 +465,87 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // 10. Приоритетная загрузка: первый блок → второй → заявка → всё остальное по порядку
+    const aboutSection = document.getElementById('about');
+    const contactsSection = document.getElementById('contacts');
+    const gallerySection = document.getElementById('video-gallery');
+    const heroPilot = document.querySelector('.hero__center img');
+
+    const fontsAreReady = (document.fonts && document.fonts.ready)
+        ? document.fonts.ready
+        : Promise.resolve();
+
+    // Ждём декодирования пилота, чтобы следующий блок не отбирал у него канал
+    const heroPilotReady = (heroPilot && typeof heroPilot.decode === 'function')
+        ? heroPilot.decode().catch(() => {})
+        : Promise.resolve();
+
+    // Страховка: если ресурс не загрузился, очередь не встаёт навсегда
+    const withTimeout = (promise, ms) => Promise.race([
+        promise,
+        new Promise((resolve) => setTimeout(resolve, ms))
+    ]);
+
+    // Поднимаем приоритет картинкам секции и ждём их загрузки
+    const unlockImages = (root) => {
+        if (!root) return Promise.resolve();
+
+        const images = Array.from(root.querySelectorAll('img[loading="lazy"]'));
+        images.forEach((img) => {
+            img.loading = 'eager';
+            if ('fetchPriority' in img) img.fetchPriority = 'high';
+        });
+
+        const loaded = Promise.all(images.map((img) => {
+            if (img.complete) return Promise.resolve();
+            return new Promise((resolve) => {
+                img.addEventListener('load', resolve, { once: true });
+                img.addEventListener('error', resolve, { once: true });
+            });
+        }));
+
+        return withTimeout(loaded, 4000);
+    };
+
+    // Остальные тяжёлые фоны — только когда пользователь подходит к секции
+    const loadRestOnApproach = () => {
+        if (!gallerySection) return;
+
+        const revealGallery = () => {
+            gallerySection.classList.add('is-bg-ready');
+            if (videoPlayer && videoPlayer.dataset.poster && !videoPlayer.poster) {
+                videoPlayer.poster = videoPlayer.dataset.poster;
+            }
+        };
+
+        if ('IntersectionObserver' in window) {
+            const galleryObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    revealGallery();
+                    observer.disconnect();
+                });
+            }, { rootMargin: '700px 0px' });
+            galleryObserver.observe(gallerySection);
+        } else {
+            revealGallery();
+        }
+    };
+
+    (async () => {
+        // 1. Первый экран: шрифты + пилот
+        await withTimeout(Promise.all([fontsAreReady, heroPilotReady]), 4000);
+
+        // 2. Второй блок («О команде»)
+        await unlockImages(aboutSection);
+
+        // 3. Блок с заявкой — грузим сразу после второго
+        if (contactsSection) {
+            contactsSection.classList.add('is-bg-ready');
+        }
+
+        // 4. Всё остальное — по мере прокрутки
+        loadRestOnApproach();
+    })();
 });
