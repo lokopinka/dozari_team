@@ -453,10 +453,6 @@ h2 {
 }
 .hero__slide--fon {
     background-image: url('images/fon.jpg');
-    background-image: image-set(
-        url('images/fon.webp') type('image/webp'),
-        url('images/fon.jpg') type('image/jpeg')
-    );
 }
 .hero__slide.active { opacity: 1; }
 
@@ -1523,10 +1519,6 @@ h2 {
 /* Декор грузится при приближении к секции — класс ставит script.js */
 .video-gallery.is-bg-ready::before {
     background-image: url('images/Russia.png');
-    background-image: image-set(
-        url('images/Russia-small.webp') type('image/webp'),
-        url('images/Russia.png') type('image/png')
-    );
 }
 
 /* Desktop (PC) — 3 columns, side photos fill their full blocks */
@@ -2195,10 +2187,6 @@ h2 {
 /* Фон заявки грузится после второго блока — класс ставит script.js */
 .contacts.is-bg-ready {
     background-image: url('images/slide4.jpg');
-    background-image: image-set(
-        url('images/slide4.webp') type('image/webp'),
-        url('images/slide4.jpg') type('image/jpeg')
-    );
 }
 
 .contacts__bg-overlay {
@@ -3885,11 +3873,6 @@ h2 {
     transform: none;
     filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.6));
     will-change: auto;
-}
-
-/* <picture> не должен ломать flex-раскладку пилота */
-.hero__center picture {
-    display: contents;
 }
 
 /* --- Ноутбуки: шапка 70px, раскладка остаётся горизонтальной --- */

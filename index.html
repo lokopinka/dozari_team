@@ -9,12 +9,8 @@
     <link rel="preload" as="font" type="font/woff2" href="fonts/montserrat-cyrillic.woff2" crossorigin>
     <!-- Критичные ресурсы первого экрана: стили, фон и пилот максимального приоритета -->
     <link rel="stylesheet" href="style.css" fetchpriority="high">
-    <link rel="preload" as="image" type="image/webp"
-          href="images/pilot-cutout-full.webp"
-          imagesrcset="images/pilot-cutout-800.webp 800w, images/pilot-cutout-1200.webp 1200w, images/pilot-cutout-full.webp 1600w"
-          imagesizes="(max-width: 1024px) 100vw, 70vw"
-          fetchpriority="high">
-    <link rel="preload" as="image" type="image/webp" href="images/fon.webp" fetchpriority="high">
+    <link rel="preload" as="image" type="image/png" href="images/pilot-cutout-full.webp" fetchpriority="high">
+    <link rel="preload" as="image" type="image/jpeg" href="images/fon.jpg" fetchpriority="high">
 </head>
 <body>
 
@@ -80,22 +76,14 @@
             </div>
         </div>
 
-                <!-- ЦЕНТР: Пилот (WebP с прозрачностью, PNG — резервный вариант) -->
+                <!-- ЦЕНТР: Пилот (один PNG, масштабируется под размер экрана) -->
                 <div class="hero__center">
-                    <picture>
-                        <source
-                            type="image/webp"
-                            srcset="images/pilot-cutout-800.webp 800w,
-                                    images/pilot-cutout-1200.webp 1200w,
-                                    images/pilot-cutout-full.webp 1600w"
-                            sizes="(max-width: 1024px) 100vw, 70vw">
-                        <img
-                            src="images/pilot-cutout-full.png"
-                            width="1600" height="1237"
-                            alt="Пилот команды DOZARI"
-                            fetchpriority="high"
-                            decoding="async">
-                    </picture>
+                    <img
+                        src="images/pilot-cutout-full.webp"
+                        width="1600" height="1237"
+                        alt="Пилот команды DOZARI"
+                        fetchpriority="high"
+                        decoding="async">
                 </div>
 
                
@@ -328,7 +316,7 @@
                                 class="video-gallery__media" 
                                 id="videoPlayer"
                                 src="images/video.mp4" 
-                                data-poster="images/video-poster.webp"
+                                data-poster="images/video-poster.jpg"
                                 preload="none"
                                 playsinline>
                             </video>
